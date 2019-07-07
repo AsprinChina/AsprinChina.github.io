@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[博客编辑与发布]]></title>
     <url>%2F2019%2F07%2F07%2Fblog-edit-deploy%2F</url>
-    <content type="text"><![CDATA[markdown规则——怎么写blog标题 (###)1个# 到 6个# 分别表示一级标题（large）到六级标题（small)。#号与文字之间留一空 列表 (###)无序列表前面加* 1 (* 1) 2 (* 2) 有序列表前面加数字 1 (1. 1) 2 (2. 2) 引用 (###) 文字前面加&gt; (&gt; 123) 插入图片 (###) 上一行代码为 ! [图片名] (图片地址/链接) 超链接 (###)这是GitHub的网站链接。 上一行代码为 这是[GitHub] (http://github.com)的网站链接 粗体与斜体 (###)这几个字是粗体，用两个星号包围 这几个字是斜体，用一个星号包围 上一行代码为 **……** *……* 用’\‘进行转义 代码框 (###)123import numpy as npimport tensorflow as tf​ 格式为``` codes ``` 分割线 (###)三个*, 即*** 更多规则 (###)公式、脚注、删除线、上下标、任务列表、高亮等，点击链接 博客推送规则——怎么传blog前序工作：github申请一个page，本地安装git、nodes、hexo……详情点击 完成上述工作之后，可按以下步骤推送单篇blog。]]></content>
+    <content type="text"><![CDATA[markdown规则——怎么写blog标题1个# 到 6个# 分别表示一级标题（large）到六级标题（small)。#号与文字之间留一空 列表无序列表前面加* 1 (* 1) 2 (* 2) 有序列表前面加数字 1 (1. 1) 2 (2. 2) 引用 文字前面加&gt; (&gt; 123) 插入图片 上一行代码为 ! [图片名] (图片地址/链接) 超链接这是GitHub的网站链接。 上一行代码为 这是[GitHub] (http://github.com)的网站链接 粗体与斜体这几个字是粗体，用两个星号包围 这几个字是斜体，用一个星号包围 上一行代码为 **……** *……* 用’\‘进行转义 代码框12import numpy as npimport tensorflow as tf 格式为``` codes ``` 分割线三个*, 即*** 更多规则公式、脚注、删除线、上下标、任务列表、高亮等，点击链接 博客推送规则——怎么传blog前序工作：github申请一个page，本地安装git、nodes、hexo……详情点击 完成上述工作之后，可按以下步骤推送单篇blog。]]></content>
       <categories>
         <category>生产工具</category>
       </categories>
