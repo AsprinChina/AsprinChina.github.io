@@ -98,7 +98,7 @@
 <meta property="og:description" content="markdown规则——怎么写blog标题1个# 到 6个# 分别表示一级标题（large）到六级标题（small)。#号与文字之间留一空 列表无序列表前面加*  1 (* 1)  2 (* 2)   有序列表前面加数字  1 (1. 1) 2 (2. 2)  引用 文字前面加&amp;gt; (&amp;gt; 123)  插入图片 上一行代码为      ! [图片名] (图片地址/链接) 超链接这是GitH">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://github.githubassets.com/favicon.ico">
-<meta property="og:updated_time" content="2019-07-07T05:33:01.958Z">
+<meta property="og:updated_time" content="2019-07-07T06:34:47.154Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="博客编辑与发布">
 <meta name="twitter:description" content="markdown规则——怎么写blog标题1个# 到 6个# 分别表示一级标题（large）到六级标题（small)。#号与文字之间留一空 列表无序列表前面加*  1 (* 1)  2 (* 2)   有序列表前面加数字  1 (1. 1) 2 (2. 2)  引用 文字前面加&amp;gt; (&amp;gt; 123)  插入图片 上一行代码为      ! [图片名] (图片地址/链接) 超链接这是GitH">
@@ -412,11 +412,32 @@
 <h3 id="代码框"><a href="#代码框" class="headerlink" title="代码框"></a>代码框</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br></pre></td></tr></table></figure>
 
 <p>格式为``` codes ```</p>
-<h3 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h3><p>三个*,  即***</p>
-<hr>
 <h3 id="更多规则"><a href="#更多规则" class="headerlink" title="更多规则"></a>更多规则</h3><p><a href="https://www.simon96.online/2018/10/18/Typora%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%AD%E6%96%87%E7%89%88%EF%BC%89/" target="_blank" rel="noopener">公式、脚注、删除线、上下标、任务列表、高亮等，点击链接</a></p>
-<h2 id="博客推送规则——怎么传blog"><a href="#博客推送规则——怎么传blog" class="headerlink" title="博客推送规则——怎么传blog"></a>博客推送规则——怎么传blog</h2><p>前序工作：github申请一个page，本地安装git、nodes、hexo……<a href="https://www.simon96.online/2018/10/12/hexo-tutorial/" target="_blank" rel="noopener">详情点击</a></p>
-<p>完成上述工作之后，可按以下步骤推送单篇blog。</p>
+<hr>
+<hr>
+<h2 id="博客推送规则——怎么传blog"><a href="#博客推送规则——怎么传blog" class="headerlink" title="博客推送规则——怎么传blog"></a>博客推送规则——怎么传blog</h2><ul>
+<li><p>前序工作：github申请一个page，本地安装git、nodes、hexo等，完成个性化设置……<a href="https://www.simon96.online/2018/10/12/hexo-tutorial/" target="_blank" rel="noopener">详情点击</a></p>
+</li>
+<li><p>常用指令：</p>
+<ul>
+<li>hexo clean：清除部署网站的缓存</li>
+<li>hexo g：generate，在本地生成静态网页文件</li>
+<li>hexo d：deploy，将本地静态文件部署到github</li>
+<li>hexo s：sever，将本地静态文件部署到本地端口（localhost:4000）</li>
+<li>hexo new blogname：新建一个名为blogname的博客</li>
+<li>hexo new page pagename：新建一个名为pagename的子网页</li>
+</ul>
+</li>
+<li><p>blog推送</p>
+<ol>
+<li>在hexo安装文件夹处打开git窗口（git bash here）。</li>
+<li>hexo命令新建一个博客：<code>hexo new newblog</code>，然后会在hexo文件夹下的/source/_posts文件夹里面生成相应名字的md文件（newblog.md）。</li>
+<li>在这个md文件中写入博客内容（markdown格式）。</li>
+<li>git窗口中依次输入指令<code>hexo clean</code>清除缓存，输入指令<code>hexo g</code>在本地生成静态文件，输入指令<code>hexo d</code>部署到github中。</li>
+<li>完成blog发布。</li>
+</ol>
+</li>
+</ul>
 
       
     </div>
@@ -574,7 +595,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#markdown规则——怎么写blog"><span class="nav-number">1.</span> <span class="nav-text">markdown规则——怎么写blog</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#标题"><span class="nav-number">1.1.</span> <span class="nav-text">标题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列表"><span class="nav-number">1.2.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用"><span class="nav-number">1.3.</span> <span class="nav-text">引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入图片"><span class="nav-number">1.4.</span> <span class="nav-text">插入图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超链接"><span class="nav-number">1.5.</span> <span class="nav-text">超链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#粗体与斜体"><span class="nav-number">1.6.</span> <span class="nav-text">粗体与斜体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码框"><span class="nav-number">1.7.</span> <span class="nav-text">代码框</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分割线"><span class="nav-number">1.8.</span> <span class="nav-text">分割线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多规则"><span class="nav-number">1.9.</span> <span class="nav-text">更多规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#博客推送规则——怎么传blog"><span class="nav-number">2.</span> <span class="nav-text">博客推送规则——怎么传blog</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#markdown规则——怎么写blog"><span class="nav-number">1.</span> <span class="nav-text">markdown规则——怎么写blog</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#标题"><span class="nav-number">1.1.</span> <span class="nav-text">标题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列表"><span class="nav-number">1.2.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用"><span class="nav-number">1.3.</span> <span class="nav-text">引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入图片"><span class="nav-number">1.4.</span> <span class="nav-text">插入图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超链接"><span class="nav-number">1.5.</span> <span class="nav-text">超链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#粗体与斜体"><span class="nav-number">1.6.</span> <span class="nav-text">粗体与斜体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码框"><span class="nav-number">1.7.</span> <span class="nav-text">代码框</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多规则"><span class="nav-number">1.8.</span> <span class="nav-text">更多规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#博客推送规则——怎么传blog"><span class="nav-number">2.</span> <span class="nav-text">博客推送规则——怎么传blog</span></a></li></ol></div>
             
 
           </div>

@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[博客编辑与发布]]></title>
     <url>%2F2019%2F07%2F07%2Fblog-edit-deploy%2F</url>
-    <content type="text"><![CDATA[markdown规则——怎么写blog标题1个# 到 6个# 分别表示一级标题（large）到六级标题（small)。#号与文字之间留一空 列表无序列表前面加* 1 (* 1) 2 (* 2) 有序列表前面加数字 1 (1. 1) 2 (2. 2) 引用 文字前面加&gt; (&gt; 123) 插入图片 上一行代码为 ! [图片名] (图片地址/链接) 超链接这是GitHub的网站链接。 上一行代码为 这是[GitHub] (http://github.com)的网站链接 粗体与斜体这几个字是粗体，用两个星号包围 这几个字是斜体，用一个星号包围 上一行代码为 **……** *……* 用’\‘进行转义 代码框12import numpy as npimport tensorflow as tf 格式为``` codes ``` 分割线三个*, 即*** 更多规则公式、脚注、删除线、上下标、任务列表、高亮等，点击链接 博客推送规则——怎么传blog前序工作：github申请一个page，本地安装git、nodes、hexo……详情点击 完成上述工作之后，可按以下步骤推送单篇blog。]]></content>
+    <content type="text"><![CDATA[markdown规则——怎么写blog标题1个# 到 6个# 分别表示一级标题（large）到六级标题（small)。#号与文字之间留一空 列表无序列表前面加* 1 (* 1) 2 (* 2) 有序列表前面加数字 1 (1. 1) 2 (2. 2) 引用 文字前面加&gt; (&gt; 123) 插入图片 上一行代码为 ! [图片名] (图片地址/链接) 超链接这是GitHub的网站链接。 上一行代码为 这是[GitHub] (http://github.com)的网站链接 粗体与斜体这几个字是粗体，用两个星号包围 这几个字是斜体，用一个星号包围 上一行代码为 **……** *……* 用’\‘进行转义 代码框12import numpy as npimport tensorflow as tf 格式为``` codes ``` 更多规则公式、脚注、删除线、上下标、任务列表、高亮等，点击链接 博客推送规则——怎么传blog 前序工作：github申请一个page，本地安装git、nodes、hexo等，完成个性化设置……详情点击 常用指令： hexo clean：清除部署网站的缓存 hexo g：generate，在本地生成静态网页文件 hexo d：deploy，将本地静态文件部署到github hexo s：sever，将本地静态文件部署到本地端口（localhost:4000） hexo new blogname：新建一个名为blogname的博客 hexo new page pagename：新建一个名为pagename的子网页 blog推送 在hexo安装文件夹处打开git窗口（git bash here）。 hexo命令新建一个博客：hexo new newblog，然后会在hexo文件夹下的/source/_posts文件夹里面生成相应名字的md文件（newblog.md）。 在这个md文件中写入博客内容（markdown格式）。 git窗口中依次输入指令hexo clean清除缓存，输入指令hexo g在本地生成静态文件，输入指令hexo d部署到github中。 完成blog发布。]]></content>
       <categories>
         <category>生产工具</category>
       </categories>
