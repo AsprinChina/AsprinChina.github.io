@@ -408,9 +408,8 @@
 <p>上一行代码为      这是[GitHub] (<a href="http://github.com)的网站链接" target="_blank" rel="noopener">http://github.com)的网站链接</a></p>
 <h3 id="粗体与斜体"><a href="#粗体与斜体" class="headerlink" title="粗体与斜体"></a>粗体与斜体</h3><p><strong>这几个字是粗体，用两个星号包围</strong>   <em>这几个字是斜体，用一个星号包围</em></p>
 <p>上一行代码为      **……**     *……*</p>
-<p>用’\‘进行转义</p>
+<p>用’\\’进行转义</p>
 <h3 id="代码框"><a href="#代码框" class="headerlink" title="代码框"></a>代码框</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br></pre></td></tr></table></figure>
-
 <p>格式为``` codes ```</p>
 <h3 id="更多规则"><a href="#更多规则" class="headerlink" title="更多规则"></a>更多规则</h3><p><a href="https://www.simon96.online/2018/10/18/Typora%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%AD%E6%96%87%E7%89%88%EF%BC%89/" target="_blank" rel="noopener">公式、脚注、删除线、上下标、任务列表、高亮等，点击链接</a></p>
 <hr>
@@ -1110,6 +1109,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 
