@@ -99,7 +99,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://s2.ax1x.com/2019/07/08/ZreBPH.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/07/08/ZrenbT.png">
-<meta property="og:updated_time" content="2019-07-08T16:27:47.851Z">
+<meta property="og:updated_time" content="2019-07-09T01:12:17.731Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="优化基础理论">
 <meta name="twitter:description" content="引言​        小站里面后续很多内容都是围绕着优化展开的，所以第一篇博客自然就要讲一讲优化的基础内容。有两方面目的，一是介绍一些数学基础，省去后续赘述；二是规定一下标准形式，这会影响到后续一些结论的形式，本站均采用Boyd的《Convex Optimization》中的标准形式。 ​        一般地，一个优化问题可以写为目标函数+约束（进一步区分为等式约束与不等式约束）的格式，本站中规">
@@ -387,7 +387,7 @@
       
 
       
-        <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>​        小站里面后续很多内容都是围绕着优化展开的，所以第一篇博客自然就要讲一讲优化的基础内容。有两方面目的，一是介绍一些数学基础，省去后续赘述；二是规定一下标准形式，这会影响到后续一些结论的形式，本站均采用Boyd的《Convex Optimization》中的标准形式。</p>
+        <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>​        小站里面后续很多内容都是围绕着优化展开的，所以第一篇博客自然就要讲一讲优化的基础内容。有两方面目的，一是介绍一些数学基础，省去后续赘述；二是规定一下标准形式，这会影响到后续一些结论的形式，本站均采用<a href="https://cloud.tsinghua.edu.cn/f/f9a80c011a7a4dceae95/" target="_blank" rel="noopener">Boyd的《Convex Optimization》</a>中的标准形式。</p>
 <p>​        一般地，一个优化问题可以写为目标函数+约束（进一步区分为等式约束与不等式约束）的格式，本站中规定其标准形式为：</p>
 <script type="math/tex; mode=display">
 \begin{split}
@@ -403,7 +403,7 @@ L(x,\mu,\lambda)=f(x)+\mu g(x)+\lambda h(x)</script><p>​        上述形式�
 <p>则$f(x)$的梯度定义为</p>
 <script type="math/tex; mode=display">
 \nabla f(x)=[\frac{\partial f(x)}{\partial x_1},\ \frac{\partial f(x)}{\partial x_2},
-\ \cdots,\ \frac{\partial f(x)}{\partial x_n}]</script><p>$f(x)$的海森矩阵定义为</p>
+\ \cdots,\ \frac{\partial f(x)}{\partial x_n}]^T</script><p>$f(x)$的海森矩阵定义为</p>
 <script type="math/tex; mode=display">
 \nabla ^2 f(x) = 
 \begin{bmatrix}
