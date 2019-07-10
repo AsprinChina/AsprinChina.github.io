@@ -99,8 +99,9 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://s2.ax1x.com/2019/07/08/ZreBPH.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/07/08/ZrenbT.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/07/09/Z6i3ZD.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/07/09/ZyEiCj.png">
-<meta property="og:updated_time" content="2019-07-09T11:06:12.932Z">
+<meta property="og:updated_time" content="2019-07-10T02:01:31.073Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="优化基础理论">
 <meta name="twitter:description" content="引言​        小站里面后续很多内容都是围绕着优化展开的，所以第一篇博客自然就要讲一讲优化的基础内容。有两方面目的，一是介绍一些数学基础，省去后续赘述；二是规定一下标准形式，这会影响到后续一些结论的形式，本站均采用Boyd的《Convex Optimization》中的标准形式。 ​        一般地，一个优化问题可以写为目标函数+约束（进一步区分为等式约束与不等式约束）的格式，本站中规">
@@ -398,9 +399,8 @@
 \end{split}</script><p>​        再规定上述优化问题的拉格朗日函数为</p>
 <script type="math/tex; mode=display">
 L(x,\mu,\lambda)=f(x)+\mu ^T g(x)+\lambda ^T h(x)</script><p>​        上述形式和一些优化教材中的并不一致，比如陈宝林老师的《最优化》，其乘子定义是上述形式的相反数。之所以在各种形式中选取Boyd书中的这一种，是因为大多数文献中均采用这一格式，且诸多优化求解器如cplex、gurobi中的乘子定义也采用这一格式。</p>
-<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
-<li><p>梯度，雅可比矩阵，与海森矩阵</p>
-<p>​        定义向量$x=[x_1,\ x_2,\ \cdots,\ x_n]^T$，标量函数$f(x)$，与向量函数$F(x)=[f_1(x),\ f_2(x),\ \cdots,\ f_m(x)]^T$</p>
+<hr>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="梯度，雅可比矩阵，与海森矩阵"><a href="#梯度，雅可比矩阵，与海森矩阵" class="headerlink" title="梯度，雅可比矩阵，与海森矩阵"></a>梯度，雅可比矩阵，与海森矩阵</h3><p>​        定义向量$x=[x_1,\ x_2,\ \cdots,\ x_n]^T$，标量函数$f(x)$，与向量函数$F(x)=[f_1(x),\ f_2(x),\ \cdots,\ f_m(x)]^T$</p>
 <p>则$f(x)$的梯度定义为</p>
 <script type="math/tex; mode=display">
 \nabla f(x)=[\frac{\partial f(x)}{\partial x_1},\ \frac{\partial f(x)}{\partial x_2},
@@ -424,11 +424,7 @@ Jacobi(F)=
 \frac{\partial f_m(x)}{\partial x_1} & \frac{\partial f_m(x)}{\partial x_2} &
 \cdots & \frac{\partial f_m(x)}{\partial x_n}
 \end{bmatrix}</script><p>​        从上述定义中可以看到，$f(x)$的梯度的雅可比矩阵就是其海森矩阵。</p>
-</li>
-</ul>
-<ul>
-<li><p>凸集</p>
-<p>​        记$S\in\mathbb R^n$，若对$\forall x_1,\ x_2\in S, \ \forall \lambda \in [0,1]$有</p>
+<h3 id="凸集"><a href="#凸集" class="headerlink" title="凸集"></a>凸集</h3><p>​        记$S\in\mathbb R^n$，若对$\forall x_1,\ x_2\in S, \ \forall \lambda \in [0,1]$有</p>
 <script type="math/tex; mode=display">
 \lambda x_1 + (1-\lambda)x_2 \in S</script><p>则称$S$是一个凸集。</p>
 <p>​        感性来说，在一个集合里面任选两点连起来，如果这条线段被这个集合包围，则为凸集，反之就不是，如图1$^{[1]}$。</p>
@@ -437,11 +433,7 @@ Jacobi(F)=
 
 
 
-</li>
-</ul>
-<ul>
-<li><p>凸函数</p>
-<p>​        对于函数$f(x)$，若满足定义域为非空凸集，且对$\forall x_1,\ x_2\in \mathbf {dom} \  f, \ \forall \lambda \in [0,1]$有</p>
+<h3 id="凸函数"><a href="#凸函数" class="headerlink" title="凸函数"></a>凸函数</h3><p>​        对于函数$f(x)$，若满足定义域为非空凸集，且对$\forall x_1,\ x_2\in \mathbf {dom} \  f, \ \forall \lambda \in [0,1]$有</p>
 <script type="math/tex; mode=display">
 f(\lambda x_1+(1-\lambda) x_2) \le \lambda f(x_1)+(1-\lambda)f(x_2)</script><p>则称$f(x)$是定义域上的凸函数，$-f(x)$是定义域上的凹函数。</p>
 <p>​        感性来说，一个函数上任意两点连线，这条线段比原函数不低，则为凸函数，反之则不是，如图2$^{[1]}$。</p>
@@ -450,13 +442,9 @@ f(\lambda x_1+(1-\lambda) x_2) \le \lambda f(x_1)+(1-\lambda)f(x_2)</script><p>�
 
 <p>​        特别地，如果$f(x)$可微，那么可用更方便的一阶条件（要求一阶可微）、二阶条件（要求二阶可微）判断凸函数。</p>
 <p>​        一阶条件：定义在非空开凸集上的可微函数$f(x)$是凸函数的充要条件是，对$\forall x_1,\ x_2\in \mathbf {dom} f\ $有</p>
-</li>
-</ul>
 <script type="math/tex; mode=display">
 f(x_2) \ge f(x_1)+\nabla f(x_1)^T(x_2-x_1)</script><p>​                二阶条件：定义在非空开凸集的二次可微函数$f(x)$是凸函数的充要条件是，对$\forall x \in \mathbf {dom} f\ $有$\nabla ^2 f(x)$半        正定。</p>
-<ul>
-<li><p>凸优化问题</p>
-<p>​        若一个优化问题是求凸函数在凸集上的极小点，则称为凸优化问题。</p>
+<h3 id="凸优化问题"><a href="#凸优化问题" class="headerlink" title="凸优化问题"></a>凸优化问题</h3><p>​        若一个优化问题是求凸函数在凸集上的极小点，则称为凸优化问题。</p>
 <p>​        对于引言中所述的优化问题标准形式，若满足$f(x)$是凸函数，$g(x)$是凹函数，$h(x)$是仿射函数，则该优化问题是一个凸优化问题。</p>
 <p>​        此处要特别注意，优化问题中的约束必须是剔除冗余约束的。举个例子，对于问题</p>
 <script type="math/tex; mode=display">
@@ -471,17 +459,25 @@ f(x_2) \ge f(x_1)+\nabla f(x_1)^T(x_2-x_1)</script><p>​                二阶�
 &s.t. &y\ge1
 \end{split}</script><p>这显然是一个凸问题，既满足凸问题的原始定义，也符合标准形式判据。</p>
 <p>凸优化问题有诸多良好的性质，比如局部最优解就是全局最优解等，通常可以被商业求解器(gurobi、cplex)很好解决，故一个优化问题是不是凸的通常被视为一个问题好不好求解的分水岭。</p>
-</li>
-</ul>
+<p>凸优化问题又可以按照目标函数与约束的函数特点进一步细分为线性规划（LP）、二次规划（QP）、二次约束二次规划（QCQP）、二阶锥规划（SOCP）、以及半正定规划（SDP），后续将会专门出一个blog来介绍这些特殊的凸优化问题。</p>
+<h3 id="共轭函数"><a href="#共轭函数" class="headerlink" title="共轭函数"></a>共轭函数</h3><p>​        共轭函数又称<strong>勒让德变换</strong>。记$f(x)$是一个从$\mathbb R^n$到$\mathbb R$的映射，其共轭函数（也是一个从$\mathbb R^n$到$\mathbb R$的映射）定义为</p>
+<script type="math/tex; mode=display">
+f^*(y)=\mathop{sup}\limits_{x \in \mathbf {dom} \ f} \ (y^Tx - f(x))</script><p>​        图3$^{[1]}$是$\mathbb R$空间中一个函数$f(x)$在某个$\hat y$取值处的共轭函数值示意：对一个确定的$\hat y$，以之为斜率作一过原点的直线，记在$\hat x$处有$f’(\hat x)=\hat y$（图中切点），那么$f^*(\hat y)= \hat y ^T \hat x - f(\hat x)$，正是图中$f(x)$切线的截距相反数。</p>
+<p>​        特别地，当$\hat y=0$时，$f^*(0)$就是$f(x)$下界的相反数。</p>
+<p><img src="https://s2.ax1x.com/2019/07/09/Z6i3ZD.png" alt="图3  共轭函数"></p>
+<center>图3  共轭函数</center>
+
+<p>​        共轭函数的一个重要性质是，其是关于$y$的一个仿射函数，是凸的。共轭函数在对偶问题的表示上有重要作用，尤其是线性约束的优化问题（$y$视为对偶变量）。</p>
+<hr>
 <h2 id="最优性条件"><a href="#最优性条件" class="headerlink" title="最优性条件"></a>最优性条件</h2><p>​        对于一个优化问题，若要找到其最优解，首先就要明确最优解有什么性质，满足什么条件，然后才能够据此去推导求解的算法。最优解满足的条件（必要、充分、充要）称为最优性条件。</p>
 <p>​        本节仅介绍各种问题的最优性条件，其中的推导与证明可在[1]、[2]中找到。</p>
 <p>​        在邻域内目标函数值最小的解称为局部最优解（极小点），在整个定义域内目标函数值最小的解称为全局最优解（极小点）。</p>
 <h3 id="无约束问题的最优性条件"><a href="#无约束问题的最优性条件" class="headerlink" title="无约束问题的最优性条件"></a>无约束问题的最优性条件</h3><p>​        对于可行域是全空间的无约束优化问题</p>
 <script type="math/tex; mode=display">
 min\ \ f(x)</script><h4 id="一阶必要条件"><a href="#一阶必要条件" class="headerlink" title="一阶必要条件"></a>一阶必要条件</h4><p>​        $f(x)$在$\hat x$处可微，若$\hat x$是局部极小点，则$\nabla f(\hat x)=0$。</p>
-<p>​        这是一个必要条件而非充分条件。一般地，满足$\nabla f(x)=0$的点称为$f(x)$的驻点，如果驻点邻域内的函数值均比驻点函数值大，则该驻点称为极小点；如果驻点领域内函数值均比驻点函数值小，则该驻点称为极大点；两者均不满足则称为鞍点，如图3。</p>
+<p>​        这是一个必要条件而非充分条件。一般地，满足$\nabla f(x)=0$的点称为$f(x)$的驻点，如果驻点邻域内的函数值均比驻点函数值大，则该驻点称为极小点；如果驻点领域内函数值均比驻点函数值小，则该驻点称为极大点；两者均不满足则称为鞍点，如图4。</p>
 <p><img src="https://s2.ax1x.com/2019/07/09/ZyEiCj.png" alt="图3 各种驻点"></p>
-<center>图3  驻点：极小点、极大点与驻点</center>
+<center>图4  驻点：极小点、极大点与驻点</center>
 
 <h4 id="二阶必要条件"><a href="#二阶必要条件" class="headerlink" title="二阶必要条件"></a>二阶必要条件</h4><p>​        $f(x)$在$\hat x$处二次可微，若$\hat x$是局部极小点，则$\nabla f(\hat x)=0$，且$\nabla ^2 f(\hat x)$半正定。</p>
 <p>​        相比一阶必要条件，二阶必要条件多的“海森矩阵“就是用来判断驻点类型的。一般地，对于极大点，海森矩阵半负定；对于极小点，海森矩阵半正定；对于鞍点，海森矩阵不定。</p>
@@ -515,6 +511,7 @@ L(x,\mu,\lambda)=f(x)+\mu ^T g(x)+\lambda ^T h(x)</script><p>其中$\mu, \ \lamb
 <p>​        （5）式是推导过程中的中间条件（用于Gordan定理的应用）。</p>
 <h4 id="一阶充分条件"><a href="#一阶充分条件" class="headerlink" title="一阶充分条件"></a>一阶充分条件</h4><p>​        特别地，如果该优化问题是一个凸优化问题，那么KKT条件也是“$\hat x$是局部（或全局）最优解”的充分条件。</p>
 <h4 id="二阶条件"><a href="#二阶条件" class="headerlink" title="二阶条件"></a>二阶条件</h4><p>​        无约束优化的二阶条件也可以推广到有约束优化，即从目标函数的海森矩阵推广到拉格朗日函数的海森矩阵，但会增加一些复杂的规格约束。实际使用中感觉一阶条件更为常用，二阶条件使用较少，在Boyd的书中我也没找到相关论述，感兴趣的同学可以参考陈宝林老师的《最优化》$^{[2]}$中7.2.5节。</p>
+<hr>
 <h2 id="对偶问题"><a href="#对偶问题" class="headerlink" title="对偶问题"></a>对偶问题</h2><p>​        对偶问题有着强烈的物理意义，在很多算法中都有巧妙的应用，所以在这里也介绍经常用到的一些基本概念。</p>
 <h3 id="原问题与对偶问题"><a href="#原问题与对偶问题" class="headerlink" title="原问题与对偶问题"></a>原问题与对偶问题</h3><p>​        对于优化问题（称为原问题）</p>
 <script type="math/tex; mode=display">
@@ -546,7 +543,12 @@ L(x, \ \hat \mu, \ \hat\lambda)</script><p>​        则称$(\hat x, \ \hat \mu
 <li>若$(\hat x, \ \hat \mu, \ \hat\lambda)$是拉格朗日函数的鞍点，则$\hat x$和$(\hat \mu,\ \hat \lambda)$分别是原问题和对偶问题的最优解。</li>
 <li>若原问题是凸优化问题，且满足slater约束规格，且存在最优解$\hat x$，那么存在$\hat \mu (&gt;0), \ \hat \lambda$使得$(\hat x, \ \hat \mu, \ \hat\lambda)$是拉格朗日函数的鞍点。</li>
 </ul>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>[1] Boyd S, Vandenberghe L. Convex optimization[M]. Cambridge university press, 2004.</p>
+<hr>
+<h2 id="优化问题的求解算法"><a href="#优化问题的求解算法" class="headerlink" title="优化问题的求解算法"></a>优化问题的求解算法</h2><p>​        在分析了最优性条件之后，就是要利用这些性质去求解优化问题。</p>
+<p>​        按照求解算法是否利用目标函数的导数信息，优化问题的求解算法可以分为<strong>使用导数的优化方法</strong>和<strong>（不使用导数的直接方法</strong>两大类。按照求解的优化问题有没有约束，优化问题的求解算法又可以分为<strong>无约束优化方法</strong>和<strong>有约束优化方法</strong>。</p>
+<p>​        这一部分内容比较多，后续将会专门开一个blog来介绍各种优化算法的原理推导、工作特性以及代码实现等。</p>
+<hr>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>[1] <a href="https://cloud.tsinghua.edu.cn/f/f9a80c011a7a4dceae95/" target="_blank" rel="noopener">Boyd S, Vandenberghe L. Convex optimization[M]. Cambridge university press, 2004.</a></p>
 <p>[2] 陈宝林，最优化理论与算法，清华大学出版社，2005</p>
 
       
@@ -705,7 +707,7 @@ L(x, \ \hat \mu, \ \hat\lambda)</script><p>​        则称$(\hat x, \ \hat \mu
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">2.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最优性条件"><span class="nav-number">3.</span> <span class="nav-text">最优性条件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#无约束问题的最优性条件"><span class="nav-number">3.1.</span> <span class="nav-text">无约束问题的最优性条件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一阶必要条件"><span class="nav-number">3.1.1.</span> <span class="nav-text">一阶必要条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二阶必要条件"><span class="nav-number">3.1.2.</span> <span class="nav-text">二阶必要条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二阶充分条件"><span class="nav-number">3.1.3.</span> <span class="nav-text">二阶充分条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#充要条件"><span class="nav-number">3.1.4.</span> <span class="nav-text">充要条件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有约束问题的最优性条件"><span class="nav-number">3.2.</span> <span class="nav-text">有约束问题的最优性条件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一阶必要条件（KKT条件）"><span class="nav-number">3.2.1.</span> <span class="nav-text">一阶必要条件（KKT条件）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一阶充分条件"><span class="nav-number">3.2.2.</span> <span class="nav-text">一阶充分条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二阶条件"><span class="nav-number">3.2.3.</span> <span class="nav-text">二阶条件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对偶问题"><span class="nav-number">4.</span> <span class="nav-text">对偶问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原问题与对偶问题"><span class="nav-number">4.1.</span> <span class="nav-text">原问题与对偶问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对偶定理"><span class="nav-number">4.2.</span> <span class="nav-text">对偶定理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#弱对偶定理"><span class="nav-number">4.2.1.</span> <span class="nav-text">弱对偶定理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#强对偶定理"><span class="nav-number">4.2.2.</span> <span class="nav-text">强对偶定理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#鞍点定理"><span class="nav-number">4.3.</span> <span class="nav-text">鞍点定理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">2.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度，雅可比矩阵，与海森矩阵"><span class="nav-number">2.1.</span> <span class="nav-text">梯度，雅可比矩阵，与海森矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#凸集"><span class="nav-number">2.2.</span> <span class="nav-text">凸集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#凸函数"><span class="nav-number">2.3.</span> <span class="nav-text">凸函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#凸优化问题"><span class="nav-number">2.4.</span> <span class="nav-text">凸优化问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#共轭函数"><span class="nav-number">2.5.</span> <span class="nav-text">共轭函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最优性条件"><span class="nav-number">3.</span> <span class="nav-text">最优性条件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#无约束问题的最优性条件"><span class="nav-number">3.1.</span> <span class="nav-text">无约束问题的最优性条件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一阶必要条件"><span class="nav-number">3.1.1.</span> <span class="nav-text">一阶必要条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二阶必要条件"><span class="nav-number">3.1.2.</span> <span class="nav-text">二阶必要条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二阶充分条件"><span class="nav-number">3.1.3.</span> <span class="nav-text">二阶充分条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#充要条件"><span class="nav-number">3.1.4.</span> <span class="nav-text">充要条件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有约束问题的最优性条件"><span class="nav-number">3.2.</span> <span class="nav-text">有约束问题的最优性条件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一阶必要条件（KKT条件）"><span class="nav-number">3.2.1.</span> <span class="nav-text">一阶必要条件（KKT条件）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一阶充分条件"><span class="nav-number">3.2.2.</span> <span class="nav-text">一阶充分条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二阶条件"><span class="nav-number">3.2.3.</span> <span class="nav-text">二阶条件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对偶问题"><span class="nav-number">4.</span> <span class="nav-text">对偶问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原问题与对偶问题"><span class="nav-number">4.1.</span> <span class="nav-text">原问题与对偶问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对偶定理"><span class="nav-number">4.2.</span> <span class="nav-text">对偶定理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#弱对偶定理"><span class="nav-number">4.2.1.</span> <span class="nav-text">弱对偶定理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#强对偶定理"><span class="nav-number">4.2.2.</span> <span class="nav-text">强对偶定理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#鞍点定理"><span class="nav-number">4.3.</span> <span class="nav-text">鞍点定理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化问题的求解算法"><span class="nav-number">5.</span> <span class="nav-text">优化问题的求解算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
