@@ -101,7 +101,7 @@
 <meta property="og:image" content="https://s2.ax1x.com/2019/07/08/ZrenbT.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/07/09/Z6i3ZD.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/07/09/ZyEiCj.png">
-<meta property="og:updated_time" content="2019-07-10T02:01:31.073Z">
+<meta property="og:updated_time" content="2019-07-10T02:13:26.309Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="优化基础理论">
 <meta name="twitter:description" content="引言​        小站里面后续很多内容都是围绕着优化展开的，所以第一篇博客自然就要讲一讲优化的基础内容。有两方面目的，一是介绍一些数学基础，省去后续赘述；二是规定一下标准形式，这会影响到后续一些结论的形式，本站均采用Boyd的《Convex Optimization》中的标准形式。 ​        一般地，一个优化问题可以写为目标函数+约束（进一步区分为等式约束与不等式约束）的格式，本站中规">
@@ -544,8 +544,8 @@ L(x, \ \hat \mu, \ \hat\lambda)</script><p>​        则称$(\hat x, \ \hat \mu
 <li>若原问题是凸优化问题，且满足slater约束规格，且存在最优解$\hat x$，那么存在$\hat \mu (&gt;0), \ \hat \lambda$使得$(\hat x, \ \hat \mu, \ \hat\lambda)$是拉格朗日函数的鞍点。</li>
 </ul>
 <hr>
-<h2 id="优化问题的求解算法"><a href="#优化问题的求解算法" class="headerlink" title="优化问题的求解算法"></a>优化问题的求解算法</h2><p>​        在分析了最优性条件之后，就是要利用这些性质去求解优化问题。</p>
-<p>​        按照求解算法是否利用目标函数的导数信息，优化问题的求解算法可以分为<strong>使用导数的优化方法</strong>和<strong>（不使用导数的直接方法</strong>两大类。按照求解的优化问题有没有约束，优化问题的求解算法又可以分为<strong>无约束优化方法</strong>和<strong>有约束优化方法</strong>。</p>
+<h2 id="优化问题的求解算法"><a href="#优化问题的求解算法" class="headerlink" title="优化问题的求解算法"></a>优化问题的求解算法</h2><p>​        在分析了最优性条件之后，就是要利用这些性质去推导求解优化问题的算法。</p>
+<p>​        按照求解算法是否利用目标函数的导数信息，优化问题的求解算法可以分为<strong>使用导数的优化方法</strong>和<strong>不使用导数的直接方法</strong>两大类。按照求解的优化问题有没有约束，优化问题的求解算法又可以分为<strong>无约束问题的优化方法</strong>和<strong>有约束问题的优化方法</strong>。</p>
 <p>​        这一部分内容比较多，后续将会专门开一个blog来介绍各种优化算法的原理推导、工作特性以及代码实现等。</p>
 <hr>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>[1] <a href="https://cloud.tsinghua.edu.cn/f/f9a80c011a7a4dceae95/" target="_blank" rel="noopener">Boyd S, Vandenberghe L. Convex optimization[M]. Cambridge university press, 2004.</a></p>
