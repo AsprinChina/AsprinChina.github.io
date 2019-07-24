@@ -90,17 +90,22 @@
   </script>
 
 
-<meta name="description" content="引言on the road……">
+<meta name="description" content="​        在《优化基础理论》博客中，介绍了凸优化问题的定义。这篇博客在此基础上来介绍几种典型的凸优化问题，包括线性规划（Linear Programming，LP）、二次规划（Quadratic Programming，QP）、二次约束二次规划（Quadratically Constrained Quadratic Programming，QCQP）、二阶锥规划（Second-Order">
 <meta property="og:type" content="article">
 <meta property="og:title" content="凸优化问题">
 <meta property="og:url" content="http://yoursite.com/2019/07/20/convexop/index.html">
 <meta property="og:site_name" content="单纯形乘子分之一">
-<meta property="og:description" content="引言on the road……">
+<meta property="og:description" content="​        在《优化基础理论》博客中，介绍了凸优化问题的定义。这篇博客在此基础上来介绍几种典型的凸优化问题，包括线性规划（Linear Programming，LP）、二次规划（Quadratic Programming，QP）、二次约束二次规划（Quadratically Constrained Quadratic Programming，QCQP）、二阶锥规划（Second-Order">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-20T14:05:31.294Z">
+<meta property="og:image" content="https://s2.ax1x.com/2019/07/22/eCRvk9.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/07/22/eCRXTJ.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/07/24/eAOdjf.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/07/24/eVSiLt.jpg">
+<meta property="og:updated_time" content="2019-07-24T08:46:25.856Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="凸优化问题">
-<meta name="twitter:description" content="引言on the road……">
+<meta name="twitter:description" content="​        在《优化基础理论》博客中，介绍了凸优化问题的定义。这篇博客在此基础上来介绍几种典型的凸优化问题，包括线性规划（Linear Programming，LP）、二次规划（Quadratic Programming，QP）、二次约束二次规划（Quadratically Constrained Quadratic Programming，QCQP）、二阶锥规划（Second-Order">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/07/22/eCRvk9.png">
 
 
 
@@ -384,7 +389,221 @@
       
 
       
-        <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>on the road……</p>
+        <p>​        在《优化基础理论》博客中，介绍了凸优化问题的定义。这篇博客在此基础上来介绍几种典型的凸优化问题，包括<strong>线性规划</strong>（Linear Programming，LP）、<strong>二次规划</strong>（Quadratic Programming，QP）、<strong>二次约束二次规划</strong>（Quadratically Constrained Quadratic Programming，QCQP）、<strong>二阶锥规划</strong>（Second-Order Cone Programming）、<strong>半定规划</strong>（Semidefinite Programming，SDP）。</p>
+<hr>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>​        凸优化是优化领域的一个主干方向，这是因为凸优化问题相较其他优化问题有着独到之处，体现在以下几个方面</p>
+<ul>
+<li>凸优化问题有着近乎完美的理论，满足很好的数学性质，主要指凸优化问题满足强对偶定理，还有形式便于检验的最优性条件（零梯度点即为全局最优解）。</li>
+<li>凸优化问题有着成熟有效的求解算法，这些算法通常都可以在多项式时间内找到全局最优解。一般来说，大多数凸优化问题都可以直接调用商业求解器来完成求解。</li>
+<li>凸优化问题有着非常非常多的应用。经济学中的投资优化分配、电力系统中的最优潮流（DC）、机器学习中的支持向量机……都是凸优化问题的一个实例。</li>
+</ul>
+<p>​        所以对于一个实际问题，在将其抽象成一个数学问题之后，我们首先会检验其是不是凸的，如果不是那么就要使用各种近似、松弛的手段来实现凸化。如果一个问题已经被一个凸优化问题所刻画，那么这个问题通常基本上大概率也就解决了。之所以说这么谨慎就是因为还是有反例的，基本上是大规模问题的求解。比如说经典SVM就是一个典型的QP问题，但是在数据集样本规模极大的情况下，用QP问题的经典算法是难以在合适的时间内算出来的，通常会有相应的算法，比如<a href="https://zhuanlan.zhihu.com/p/31886934" target="_blank" rel="noopener">SVM</a>通常用<a href="https://zhuanlan.zhihu.com/p/29212107" target="_blank" rel="noopener">SMO算法</a>来求解，详情可以参考西瓜书的支持向量机章节。</p>
+<p>​        凸优化问题的范围极广，只要满足凸优化问题的定义都是。在这些问题中呢，又会有一些更加典型、常见的特殊凸优化问题，这正是接下来要介绍的。</p>
+<hr>
+<h2 id="线性规划-LP"><a href="#线性规划-LP" class="headerlink" title="线性规划 (LP)"></a>线性规划 (LP)</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>​        只要一个问题的目标函数与约束函数均为仿射函数，则该问题可称为线性规划问题。线性规划问题的一般形式为</p>
+<script type="math/tex; mode=display">
+\begin{split}
+&min\ \ &c^Tx+d\\
+&s.t. &Ax+b=0\\
+&&Gx+h\le 0
+\end{split}</script><p>$c,\ x \in \mathbb R^n,\ d\in\mathbb R,\ A\in\mathbb R^{m_1\times n},\ b\in\mathbb R^{m_1},\ G\in\mathbb R^{m_2\times n},\ h\in\mathbb R^{m_2}$。</p>
+<p>​        目标函数：<a href="http://www3.nccu.edu.tw/~joe/IO2010S/lecturenotes3_somemath.pdf" target="_blank" rel="noopener">仿射函数（点击查看仿射函数与线性函数的定义）</a>。约束条件：仿射函数构成的等式约束与不等式约束。</p>
+<p>​        线性规划问题有标准形式，定义为</p>
+<script type="math/tex; mode=display">
+\begin{split}
+&min\ \ &c^Tx+d\\
+&s.t. &Ax+b=0\\
+&&x\ge0
+\end{split}</script><p>​        目标函数：仿射函数。约束条件：【变量的仿射函数构成的等式约束】与【变量的非负约束】。</p>
+<p>​        解释一下为什么没有不等式约束：任何不等式约束均可通过一个加上一个非负的松弛变量转换为等式约束，如$\{x|x+1\ge0\}$等价于$\{x|x+1=s,\ s\ge0\}$，其中的$s$就称为松弛变量。</p>
+<p>​        解释一下为什么所有变量均非负：对于任何一个无约束变量$x$，均可将其表示为两个非负变量之差。即$\{x|x \in \mathbb R\}$等价于$\{x|x=x_1-x_2, \ x_1 \in \mathbb R^+, \ x_2 \in \mathbb R^+\}$。</p>
+<p>​        解释一下为什么有些教材$^{[1]}$会进一步要求式中的$b$为非正数，换句话说要求右手项（将$Ax+b=0$写作$Ax=-b$，其中的$-b$称为右手项）非负：这是因为右手项非负的形式便于推导求解LP的单纯形法。</p>
+<p>​        任何形式的线性规划问题均可通过一定处理转换为上述标准形式，具体方法参考[1]的2.1节，或者[2]的4.3节。</p>
+<h3 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h3><p>​        LP问题的可行域是一个凸多面体：每一个仿射约束在$\mathbb R^n$（$n$为优化变量总维数）空间中均构成一个超平面，这些超平面的交集是一个凸多面体。（把等式约束转换成不等式约束的形式，则为超平面划开的半空间的交集，是一个凸多面体，可能更加形象）。</p>
+<p>​        LP问题的目标函数等值线是一个超平面簇：等值线即目标函数具有相同值的点组成的集合，$\{x|c^Tx+d=z\}$是一簇（由$z$确定）正交于向量$c$的超平面。</p>
+<p>​        上述两点在$\mathbb R^2$空间可用图1$^{[2]}$直观地表示。</p>
+<p><img src="https://s2.ax1x.com/2019/07/22/eCRvk9.png" alt="图1 LP问题的几何解释"></p>
+<center>图1  LP问题的几何解释</center>
+
+<p>​        从上图中可以直观地得到LP问题的一个重要性质：目标函数的最优值一定在可行域的某个极点（通俗说，顶点）上取到。这是单纯形法的基本原理。</p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>​        对于线性规划问题，最常用的算法就是单纯形法。该方法的本质就是从可行域的某个极点出发，依次跳到比当前极点处目标函数值要小的极点，直至某个极点满足最优性条件则终止迭代。</p>
+<p>​        显然，对于<strong>单纯形法</strong>，最恶劣的情况是会遍历所有极点的。而$\mathbb R^n$空间中的凸多边形的极点数是随着$n$指数增长的，所以单纯形法是<strong>指数时间复杂度</strong>的算法。但有趣的是，在实际表现中，单纯形法又很管用，平均时间复杂度表现为<strong>多项式时间复杂度</strong>。所以单纯形法仍是一种广泛使用的算法。</p>
+<p>​        单纯形法问世三十余年之后，第一个理论时间复杂度为多项式复杂度的LP问题算法出世，也就是<strong>椭球法</strong>。但是这个方法的实际性能还不如单纯形法，所以理论意义更大些吧……</p>
+<p>​        目前的商业求解器对于LP问题用得多的除了单纯形法就是<strong>内点法</strong>。内点法也是一种多项式时间复杂度的算法，实际表现也不逊于单纯形法，因此得到广泛使用。要指出的是，内点法并不是一种算法，而是一类算法的统称，其基本思想与单纯形法恰恰相反，不是沿着极点跳来跳去，而是穿过可行域内部达到最优点。</p>
+<p>​        对于LP问题，常用的内点法包括<a href="http://homepages.rpi.edu/~mitchj/handouts/interior_html/interior.html" target="_blank" rel="noopener">原仿射缩放法</a>（Primal Affine Scaling，自己翻译的，也不晓得准不准确……），<a href="http://math.gmu.edu/~igriva/book/Appendix%20E.pdf" target="_blank" rel="noopener">Karmarkar法</a>等。各种算法的基本思想一致，不同之处在于如何确定下一步迭代的前进方向与步长，具体不再展开，可以点击上面的链接查看更细致的介绍。</p>
+<p>​        商业求解器Cplex、gurobi均可对LP问题提供高效的求解支持。</p>
+<hr>
+<h2 id="二次规划（QP）"><a href="#二次规划（QP）" class="headerlink" title="二次规划（QP）"></a>二次规划（QP）</h2><h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><p>​        对于形如</p>
+<script type="math/tex; mode=display">
+\begin{split}
+&min\ \ &(1/2)x^TPx+q^Tx+r\\
+&s.t. &Ax+b=0\\
+&&Gx+h\le 0
+\end{split}</script><p>$P\in\mathbb R^{n\times n},\ q,\ x \in \mathbb R^n,\ r\in\mathbb R,\ A\in\mathbb R^{m_1\times n},\ b\in\mathbb R^{m_1},\ G\in\mathbb R^{m_2\times n},\ h\in\mathbb R^{m_2}$</p>
+<p>的优化问题，<strong>若$P$是一个半正定矩阵</strong>，则该问题称为二次规划问题。</p>
+<p>​        目标函数：凸二次函数（敲黑板，不是二次函数，要求凸的）。</p>
+<p>​        约束条件：仿射函数构成的等式约束、不等式约束。</p>
+<h3 id="讨论-1"><a href="#讨论-1" class="headerlink" title="讨论"></a>讨论</h3><p>​        QP问题其实就是把LP问题的目标函数从仿射函数换成了凸二次函数，所以LP问题其实可以看作是QP问题在$P=0$时的一个特例。</p>
+<p>​        类比LP的几何解释，QP问题的可行域也是一个凸多面体，但是其目标函数等值线不再构成超平面，而是椭球的边界。特别地，$\mathbb R^2$空间内的一般QP问题的目标函数等值线与可行域可用图2$^{[2]}$表示。</p>
+<p>​        因为目标函数不再是线性的，所以QP问题的最优解无法保证在极点处取到，如图2就是一个例子，这是线性规划与非线性规划的一个重要区别，这也决定了单纯形法仅适用于LP问题。</p>
+<p>​        非常知名的支持向量机（SVM）模型就是一个典型的QP问题。<img src="https://s2.ax1x.com/2019/07/22/eCRXTJ.png" alt="图2 QP问题的几何解释"></p>
+<center>图2  QP问题的几何解释</center>
+
+<h3 id="解法-1"><a href="#解法-1" class="headerlink" title="解法"></a>解法</h3><p>​        对于一个只有等式约束的QP问题，在满足一定假设情况下，通过KKT条件是可以确定其解析解的，无需数值迭代，这一方法称为拉格朗日法。</p>
+<p>​        但是，QP问题是允许有不等式约束的，这个时候就要扩展出起作用集方法。所谓起作用，就是说不等式取等号成立。e.g.，$x+3\ge0$这个约束，在$x=-3$这个点处，是一个起作用约束；而在$x=0$处则是一个不起作用约束。更直观来说，点在约束函数对应的超平面上就称这个约束起作用。</p>
+<p>​        而所谓起作用集方法，就是先定一个初始点，确定该点处的起作用约束，然后把起作用约束转成等式约束，并去掉不起作用约束，然后再用拉格朗日法确定解析解。确定解之后，验证起作用的约束情况是否符合假定，若符合则算法结束，否则重新确定起作用约束并继续迭代。</p>
+<p>​        当然了，QP问题也可以用通用的非线性规划算法来求解，诸如共轭梯度法、内点法等。在内点法中又有路径追踪法是专门针对QP问题而设计的。</p>
+<p>​        商业求解器Cplex、gurobi均可对QP问题提供高效的求解支持。</p>
+<hr>
+<h2 id="二次约束二次规划-QCQP"><a href="#二次约束二次规划-QCQP" class="headerlink" title="二次约束二次规划 (QCQP)"></a>二次约束二次规划 (QCQP)</h2><h3 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h3><p>​        对于形如</p>
+<script type="math/tex; mode=display">
+\begin{split}
+&min\ \ &(1/2)x^TP_0x+q_0^Tx+r_0\\
+&s.t. &(1/2)x^TP_ix+q_i^Tx+r_i \le 0,\ \ i=1,2,\cdots,m\\
+&&Ax+b=0
+\end{split}</script><p>$P_0,\ P_1,\ \cdots,\ P_m\in\mathbb R^{n\times n},\ q_0,\ q_1,\ \cdots,\ q_m,\ x \in \mathbb R^n,\ r_0,\ r_1,\ \cdots,\ r_m\in\mathbb R,\ A\in\mathbb R^{m_1\times n},\ b\in\mathbb R^{m_1}$</p>
+<p>的优化问题，<strong>若$P_0$、$P_i(i=1,2,\cdots,m)$均为半正定矩阵</strong>，则称为二次约束二次规划问题。</p>
+<h3 id="讨论-2"><a href="#讨论-2" class="headerlink" title="讨论"></a>讨论</h3><p>​        QCQP是在QP问题的基础上，进一步把不等式约束函数从仿射函数推广到了凸二次函数。特别地，当$P_i(i=1,2,\cdots,m)= 0$时，QCQP就变成了一个QP问题。</p>
+<p>​        QCQP问题中非线性约束仅包含二次不等式约束，且要求$P_i$半正定，所以QCQP是一个凸的问题。这决定了QCQP的求解基本上是可以解决的，但对于大规模问题仍然吃力。</p>
+<p>​        二次不等式约束对应的可行域是$\mathbb R^n$空间中的一个椭球，故QCQP问题的可行域是一个凸多面体与若干椭球的交集。此时，可行域也一般化为非线性情况。</p>
+<h3 id="解法-2"><a href="#解法-2" class="headerlink" title="解法"></a>解法</h3><p>​        因为约束条件也一般化为了非线性情况，所以其解析解难以直接获得，即使是已知所有起作用约束。故QCQP问题的求解一般依赖于通用的非线性优化算法，这其中又以内点法最为推崇。</p>
+<p>​        商业求解器Cplex、Gurobi均可对QCQP问题提供高效的求解支持。</p>
+<hr>
+<h2 id="二阶锥规划-SOCP"><a href="#二阶锥规划-SOCP" class="headerlink" title="二阶锥规划 (SOCP)"></a>二阶锥规划 (SOCP)</h2><h3 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h3><p>​        对于形如</p>
+<script type="math/tex; mode=display">
+\begin{split}
+&min\ \ &p^Tx+q\\
+&s.t. &||A_ix+b_i||_2 \le c_i^Tx+d_i \ \ i=1,2,\cdots,m\\
+&&Fx+g=0
+\end{split}</script><p>$p,\ x,\ c_i\in\mathbb R^n,\ q,\ d_i\in\mathbb R,\ A_i\in\mathbb R^{m_i\times n},\ b_i\in\mathbb R^{m_i},\ F\in\mathbb R^{k\times n}, g\in\mathbb R^k$</p>
+<p>的优化问题，称为二阶锥规划。</p>
+<h3 id="讨论-3"><a href="#讨论-3" class="headerlink" title="讨论"></a>讨论</h3><p>​        粗粗看，SOCP问题的复杂度比前面难了很多，主要在于其二阶锥约束看起来比较复杂，先说说这里的锥是什么吧。</p>
+<p>​        锥(Cone)是一类特殊的<strong>集合</strong>。对于一个集合$C$，若对$\forall x \in C$和$k\ge0$，有$kx \in C$，则称$C$是一个锥。若$C$同时还是一个凸集，则称为凸锥。</p>
+<p>​        从定义来看，锥是一个无限延申的集合，形状上像个锥子，如图3$^{[3]}$，故取名锥很符合直观感受。<img src="https://s2.ax1x.com/2019/07/24/eAOdjf.png" alt="锥"></p>
+<center>图3  锥</center>
+
+<p>​        在众多锥中，有一类由范数定义的锥，称为范数锥。对于$|·|$范数，其范数锥定义为集合</p>
+<script type="math/tex; mode=display">
+C=\{(x,t)\ |\ \|x\| \le t,\ x\in\mathbb R^n,\ t\in \mathbb R\}</script><p>​        相应地，二范数（又称欧几里得范数，其意义为欧式距离）对应的锥称为二阶锥，又称Lorentz锥，其定义为</p>
+<script type="math/tex; mode=display">
+\begin{split}
+C&=\{(x,t)|\|x\|_2 \le t,\ x\in\mathbb R^n, \ t\in\mathbb R\}\\
+&=\left\{
+\begin{bmatrix}x\\t\end{bmatrix}
+\Bigg|
+\begin{bmatrix}x\\t\end{bmatrix}^T
+\begin{bmatrix}&I&0\ \\&0&-1\ \ \end{bmatrix}
+\begin{bmatrix}x\\t\end{bmatrix}
+\le 0,\ t\ge0
+\right  \}
+\end{split}</script><p>​        由此可以看出，SOCP问题中的二阶锥约束构成的可行域正是一个二阶锥，这正是该约束称为二阶锥约束的原因。之所以该问题称为二阶锥规划，将在后面介绍。</p>
+<p>​        从二阶锥定义的第二行可以看出，二阶锥约束的实质是一个二次不等式约束。当$t=c_i^Tx+d_i$是一个常数，即$c_i=0$时，SOCP问题就变成了一个QCQP问题。这里要注意的是，SOCP的定义中目标函数是仿射函数，而QCQP问题中目标函数允许是凸二次函数，但是这两者是等价的。原因如下。</p>
+<p>​        目标函数为凸二次函数的标准形式QCQP问题，形如</p>
+<script type="math/tex; mode=display">
+\begin{split}
+&min\ \ &(1/2)x^TP_0x+q_0^Tx+r_0\\
+&s.t. &(1/2)x^TP_ix+q_i^Tx+r_i \le 0,\ \ i=1,2,\cdots,m\\
+&&Ax+b=0
+\end{split}</script><p>​        可以等价改写为目标函数为仿射函数的QCQP问题，形如</p>
+<script type="math/tex; mode=display">
+\begin{split}
+&min\ \ &t\\
+&s.t. &(1/2)x^TP_0x+q_0^Tx+r_0 \le t\\
+&&(1/2)x^TP_ix+q_i^Tx+r_i \le 0,\ \ i=1,2,\cdots,m\\
+&&Ax+b=0
+\end{split}</script><p>​        而上述形式的问题，正是SOCP问题在$c_i=0$时的特例。</p>
+<p>​        更特别地，当$A_i=0$时，SOCP问题变成了一个LP问题。</p>
+<h3 id="解法-3"><a href="#解法-3" class="headerlink" title="解法"></a>解法</h3><p>​        同QCQP问题，SOCP问题的求解也依赖通用的非线性优化算法，这其中又以内点法最为常用。</p>
+<p>​        商业求解器Cplex、gurobi均可对SOCP问题提供高效的求解支持。</p>
+<hr>
+<h2 id="半定规划-SDP"><a href="#半定规划-SDP" class="headerlink" title="半定规划 (SDP)"></a>半定规划 (SDP)</h2><h3 id="定义-4"><a href="#定义-4" class="headerlink" title="定义"></a>定义</h3><p>​        对于形如</p>
+<script type="math/tex; mode=display">
+\begin{split}
+&min\ \ &c^Tx+d\\
+&s.t. &x_1F_1+\cdots+x_nF_n+G\preceq 0\\
+&&Ax+b=0
+\end{split}</script><p>$c,\ x\in \mathbb R^n,\ F_1,\ F_2, \ \cdots,\ F_n,\ G\in\mathbb R^{k \times k},\ A\in\mathbb R^{m \times n},\ b \in \mathbb R^m,\ d \in R$</p>
+<p>的优化问题，称为半定规划问题。</p>
+<h3 id="讨论-4"><a href="#讨论-4" class="headerlink" title="讨论"></a>讨论</h3><p>​        SDP中的第一个约束是一个矩阵不等式，其左边是一个$k$阶方阵，该不等号指该矩阵半负定。</p>
+<p>​        当$F_1,\ F_2,\ \cdots,\ F_n,\ G$均为对角矩阵（标量视为对角矩阵的特殊情况）时，SDP问题就是一个LP问题。实际上，SDP问题是一个范围极广的问题，可以由其推导出SOCP的问题形式：</p>
+<p>​        对于形如</p>
+<script type="math/tex; mode=display">
+\begin{split}
+&min\ \ &p^Tx+q\\
+&s.t. &||A_ix+b_i||_2 \le c_i^Tx+d_i \ \ i=1,2,\cdots,m
+\end{split}</script><p>的SOCP问题，可以改写为形如</p>
+<script type="math/tex; mode=display">
+\begin{split}
+&min\ \ &p^Tx+q\\
+&s.t. &
+-
+\begin{bmatrix}
+&(c_i^Tx+d_i)I  &A_ix+b_i\\
+&(A_ix+b_i)^T &c_i^Tx+d_i
+\end{bmatrix}
+\preceq 0
+\ \ i=1,2,\cdots,m
+\end{split}</script><p>的SDP问题。</p>
+<p>​        SDP问题范围虽广，但仍属于凸优化范畴，因此有大量相关研究。就应用而言，有许多将一个非凸问题松弛为SDP问题进行求解的实例，比如电力系统中交流最优潮流的SDP松弛。</p>
+<h3 id="解法-4"><a href="#解法-4" class="headerlink" title="解法"></a>解法</h3><p>​        类似QCQP和SOCP，作为更加general的问题，SDP问题也依赖一般化的非线性优化算法，内点法同样又是其中最为常用的算法。</p>
+<p>​        商业求解器Mosek和SeDuMi可以对SDP问题提供求解支持。</p>
+<hr>
+<h2 id="锥规划-CP"><a href="#锥规划-CP" class="headerlink" title="锥规划 (CP)"></a>锥规划 (CP)</h2><h3 id="广义不等式"><a href="#广义不等式" class="headerlink" title="广义不等式"></a>广义不等式</h3><p>​        在介绍锥规划前，先需要引入<strong>广义不等式</strong>的概念。而介绍广义不等式之前，又先要补充<strong>正常锥</strong>的概念。</p>
+<p>​        对于一个锥$K$，如果$K$满足1、凸的；2、闭的；3、有非空内部（$\mathbf {int} K \neq \varnothing$）；4、集合内不包含直线（即若有$x\in K, \ -x \in K$，则$x=0$），则称$K$是一个正常锥。</p>
+<p>​        基于正常锥$K$，广义不等式定义为</p>
+<script type="math/tex; mode=display">
+x\preceq_Ky</script><p>​        上式等价于</p>
+<script type="math/tex; mode=display">
+y-x\in K</script><p>​        特别地，当$K=\mathbb R^n_+$（即非负象限）时，【$x\preceq_Ky$】等价于【$x\le y$】。</p>
+<h3 id="锥规划定义"><a href="#锥规划定义" class="headerlink" title="锥规划定义"></a>锥规划定义</h3><p>​        对于形如</p>
+<script type="math/tex; mode=display">
+\begin{split}
+&min\ \ &c^Tx+d\\
+&s.t. &Fx+g\preceq_K 0\\
+&&Ax+b=0
+\end{split}</script><p>$c,\ x\in \mathbb R^n,\ d\in \mathbb R,\ F\in \mathbb R^{m_1\times n}, g\in\mathbb R^{m_1},\ A\in\mathbb R^{m_2\times n},\ b\in\mathbb R^{m_2}$</p>
+<p>的优化问题，称为锥规划问题。</p>
+<h3 id="讨论-5"><a href="#讨论-5" class="headerlink" title="讨论"></a>讨论</h3><p>​        SOCP问题与SDP问题的命名，均可从锥规划角度加以理解。</p>
+<p>​        对于上述标准形式的SOCP问题</p>
+<script type="math/tex; mode=display">
+\begin{split}
+&min\ \ &p^Tx+q\\
+&s.t. &||A_ix+b_i||_2 \le c_i^Tx+d_i \ \ i=1,2,\cdots,m\\
+&&Fx+g=0
+\end{split}</script><p>​        可以写成锥规划的形式为</p>
+<script type="math/tex; mode=display">
+\begin{split}
+&min\ \ &p^Tx+q\\
+&s.t. &
+-\begin{bmatrix}
+A_ix+b_i\\
+c_i^Tx+d_i
+\end{bmatrix}
+\preceq_{K_i}
+0
+\ \ i=1,2,\cdots,m\\
+&&Fx+g=0
+\end{split}</script><p>​        其中，正常锥$K_i$定义为$\mathbb R^{n+1}$空间中的一个二阶锥：</p>
+<script type="math/tex; mode=display">
+K_i=\left\{
+\begin{bmatrix}
+y\\
+t
+\end{bmatrix}
+\in \mathbb R^{n+1}
+\Bigg|
+\|y\|_2\le t
+\right\}</script><p>​        这正是SOCP问题被称为二阶锥规划的原因，锥规划中$K$为二阶锥的一个特例。</p>
+<p>​        同样的，SDP问题之所以称为半定规划（或半正定规划），是因为其是锥规划在$K$是<strong>半正定矩阵锥（所有半正定矩阵组成的集合）</strong>时的一个特例。</p>
+<hr>
+<h2 id="各种凸优化问题的关系"><a href="#各种凸优化问题的关系" class="headerlink" title="各种凸优化问题的关系"></a>各种凸优化问题的关系</h2><p>​        上文中依次介绍了LP、QP、QCQP、SOCP、SDP、CP问题，是一个从特殊到一般的过程，这些凸优化问题之间的关系可以用图4表示。</p>
+<p><img src="https://s2.ax1x.com/2019/07/24/eVSiLt.jpg" alt="凸优化问题关系"></p>
+<center>图4  凸优化问题关系</center>
+
+<hr>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>[1] 陈宝林，最优化理论与算法，清华大学出版社，2005</p>
+<p>[2] <a href="https://cloud.tsinghua.edu.cn/f/f9a80c011a7a4dceae95/" target="_blank" rel="noopener">Boyd S, Vandenberghe L. Convex optimization[M]. Cambridge university press, 2004.</a></p>
+<p>[3] <a href="https://wwwhome.ewi.utwente.nl/~DickinsonPJC/Teaching/2016CO/CO_Dickinson_7_v2016_11_11.pdf" target="_blank" rel="noopener">Continuous Optimization, Chapter 7: Proper Cones. Peter J.C. Dickinson. DMMP, University of Twente.</a></p>
 
       
     </div>
@@ -542,7 +761,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性规划-LP"><span class="nav-number">2.</span> <span class="nav-text">线性规划 (LP)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讨论"><span class="nav-number">2.2.</span> <span class="nav-text">讨论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解法"><span class="nav-number">2.3.</span> <span class="nav-text">解法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二次规划（QP）"><span class="nav-number">3.</span> <span class="nav-text">二次规划（QP）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-1"><span class="nav-number">3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讨论-1"><span class="nav-number">3.2.</span> <span class="nav-text">讨论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解法-1"><span class="nav-number">3.3.</span> <span class="nav-text">解法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二次约束二次规划-QCQP"><span class="nav-number">4.</span> <span class="nav-text">二次约束二次规划 (QCQP)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-2"><span class="nav-number">4.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讨论-2"><span class="nav-number">4.2.</span> <span class="nav-text">讨论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解法-2"><span class="nav-number">4.3.</span> <span class="nav-text">解法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二阶锥规划-SOCP"><span class="nav-number">5.</span> <span class="nav-text">二阶锥规划 (SOCP)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-3"><span class="nav-number">5.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讨论-3"><span class="nav-number">5.2.</span> <span class="nav-text">讨论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解法-3"><span class="nav-number">5.3.</span> <span class="nav-text">解法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#半定规划-SDP"><span class="nav-number">6.</span> <span class="nav-text">半定规划 (SDP)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-4"><span class="nav-number">6.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讨论-4"><span class="nav-number">6.2.</span> <span class="nav-text">讨论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解法-4"><span class="nav-number">6.3.</span> <span class="nav-text">解法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#锥规划-CP"><span class="nav-number">7.</span> <span class="nav-text">锥规划 (CP)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#广义不等式"><span class="nav-number">7.1.</span> <span class="nav-text">广义不等式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#锥规划定义"><span class="nav-number">7.2.</span> <span class="nav-text">锥规划定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讨论-5"><span class="nav-number">7.3.</span> <span class="nav-text">讨论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#各种凸优化问题的关系"><span class="nav-number">8.</span> <span class="nav-text">各种凸优化问题的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">9.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
