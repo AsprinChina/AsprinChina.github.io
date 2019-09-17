@@ -101,7 +101,7 @@
 <meta property="og:image" content="https://s2.ax1x.com/2019/07/08/ZrenbT.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/07/09/Z6i3ZD.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/07/09/ZyEiCj.png">
-<meta property="og:updated_time" content="2019-07-24T14:02:23.874Z">
+<meta property="og:updated_time" content="2019-09-15T13:09:56.482Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="优化基础理论">
 <meta name="twitter:description" content="引言​        小站里面后续很多内容都是围绕着优化展开的，所以第一篇博客自然就要讲一讲优化的基础内容。有两方面目的，一是介绍一些数学基础，省去后续赘述；二是规定一下标准形式，这会影响到后续一些结论的形式，本站均采用Boyd的《Convex Optimization》中的标准形式。 ​        一般地，一个优化问题可以写为目标函数+约束（进一步区分为等式约束与不等式约束）的格式，本站中规">
@@ -398,7 +398,7 @@
 &&h(x)=0
 \end{split}</script><p>​        再规定上述优化问题的拉格朗日函数为</p>
 <script type="math/tex; mode=display">
-L(x,\mu,\lambda)=f(x)+\mu ^T g(x)+\lambda ^T h(x)</script><p>​        上述形式和一些优化教材中的并不一致，比如陈宝林老师的《最优化》，其乘子定义是上述形式的相反数。之所以在各种形式中选取Boyd书中的这一种，是因为大多数文献中均采用这一格式，且诸多优化求解器如cplex、gurobi中的乘子定义也采用这一格式。</p>
+L(x,\mu,\lambda)=f(x)+\mu ^T g(x)+\lambda ^T h(x)</script><p>​        上述形式和一些优化教材中的并不一致，比如陈宝林老师的《最优化》，其乘子定义是上述形式的相反数。之所以在各种形式中选取Boyd书中的这一种，是因为大多数文献中均采用这一格式，且诸多优化求解器如cplex、ipopt中的乘子定义也采用这一格式。</p>
 <hr>
 <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="梯度，雅可比矩阵，与海森矩阵"><a href="#梯度，雅可比矩阵，与海森矩阵" class="headerlink" title="梯度，雅可比矩阵，与海森矩阵"></a>梯度，雅可比矩阵，与海森矩阵</h3><p>​        定义向量$x=[x_1,\ x_2,\ \cdots,\ x_n]^T$，标量函数$f(x)$，与向量函数$F(x)=[f_1(x),\ f_2(x),\ \cdots,\ f_m(x)]^T$</p>
 <p>则$f(x)$的梯度定义为</p>
@@ -458,7 +458,7 @@ f(x_2) \ge f(x_1)+\nabla f(x_1)^T(x_2-x_1)</script><p>​                二阶�
 &min\ \ &y\\
 &s.t. &y\ge1
 \end{split}</script><p>这显然是一个凸问题，既满足凸问题的原始定义，也符合标准形式判据。</p>
-<p>凸优化问题有诸多良好的性质，比如局部最优解就是全局最优解等，通常可以被商业求解器(gurobi、cplex)很好解决，故一个优化问题是不是凸的通常被视为一个问题好不好求解的分水岭。</p>
+<p>凸优化问题有诸多良好的性质，比如局部最优解就是全局最优解等，通常可以被商业求解器(gurobi、cplex等)很好解决，故一个优化问题是不是凸的通常被视为一个问题好不好求解的分水岭。</p>
 <p>凸优化问题又可以按照目标函数与约束的函数特点进一步细分为线性规划（LP）、二次规划（QP）、二次约束二次规划（QCQP）、二阶锥规划（SOCP）、以及半正定规划（SDP），后续将会专门出一个blog来介绍这些特殊的凸优化问题。</p>
 <h3 id="共轭函数"><a href="#共轭函数" class="headerlink" title="共轭函数"></a>共轭函数</h3><p>​        共轭函数又称<strong>勒让德变换</strong>。记$f(x)$是一个从$\mathbb R^n$到$\mathbb R$的映射，其共轭函数（也是一个从$\mathbb R^n$到$\mathbb R$的映射）定义为</p>
 <script type="math/tex; mode=display">
@@ -665,7 +665,7 @@ L(x, \ \hat \mu, \ \hat\lambda)</script><p>​        则称$(\hat x, \ \hat \mu
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
