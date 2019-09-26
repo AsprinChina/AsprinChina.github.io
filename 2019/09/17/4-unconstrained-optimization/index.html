@@ -98,17 +98,17 @@
 <meta property="og:description" content="无约束问题的优化，就是给定一个函数求取其最大/小值。按照优化算法是否利用了这个函数的导数（梯度、海森矩阵），相应算法可以分为利用导数的优化算法（下降法、牛顿法、……）和不利用导数的优化算法（模式搜索法、Powell法、……）。鉴于实际应用中前者效果更好，这里介绍其中最为常用的梯度下降法、牛顿法、拟牛顿法、共轭梯度法。 在运筹学中，其实无约束优化的应用场景并不多见，各种实际问题通常建模为有约束优化问">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/16/nR0A0A.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/09/16/nR0iOH.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unWlWV.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/16/nR0kmd.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/09/16/nR0P6e.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/09/25/uErbPs.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/09/25/uErTaQ.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unW1zT.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/25/uZRedx.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/09/25/uZRELR.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unbNjI.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/25/ueFlOe.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/19/nqbFxg.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unVSAg.png">
-<meta property="og:updated_time" content="2019-09-26T10:06:57.923Z">
+<meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unyndP.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unbtgA.png">
+<meta property="og:updated_time" content="2019-09-26T15:46:13.952Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="无约束优化算法">
 <meta name="twitter:description" content="无约束问题的优化，就是给定一个函数求取其最大/小值。按照优化算法是否利用了这个函数的导数（梯度、海森矩阵），相应算法可以分为利用导数的优化算法（下降法、牛顿法、……）和不利用导数的优化算法（模式搜索法、Powell法、……）。鉴于实际应用中前者效果更好，这里介绍其中最为常用的梯度下降法、牛顿法、拟牛顿法、共轭梯度法。 在运筹学中，其实无约束优化的应用场景并不多见，各种实际问题通常建模为有约束优化问">
@@ -412,17 +412,17 @@
 <tr>
 <td>数学表达式</td>
 <td>$min\ \ \frac 12 x_1^2+2x_2^2+5x_1-x_2$</td>
-<td>$\begin{split}  min\ \ \ &amp;3(1-x_1)^2e^{-x_1^2-(x_2+1)^2} \\ &amp; - (2x_1-10x_1^3-10x_2^5)e^{-x_1^2-x_2^2} \\ &amp;- \frac 13e^{-(x_1+1)^2-x_2^2}  \end{split}$</td>
+<td>$min\ \ (x_1^3+x_2^2-x_1)e^{-x_1^2-x_2^2}$</td>
 </tr>
 <tr>
 <td>三维曲面</td>
 <td><img src="https://s2.ax1x.com/2019/09/16/nR0A0A.png" alt="问题1 曲面"></td>
-<td><img src="https://s2.ax1x.com/2019/09/16/nR0iOH.png" alt="问题2 曲面"></td>
+<td><img src="https://s2.ax1x.com/2019/09/26/unWlWV.png" alt="问题2 曲面"></td>
 </tr>
 <tr>
 <td>二维投影</td>
 <td><img src="https://s2.ax1x.com/2019/09/16/nR0kmd.png" alt="问题1 等高线"></td>
-<td><img src="https://s2.ax1x.com/2019/09/16/nR0P6e.png" alt="问题2 等高线"></td>
+<td><img src="https://s2.ax1x.com/2019/09/26/unW1zT.png" alt="问题2 等高线"></td>
 </tr>
 </tbody>
 </table>
@@ -433,20 +433,20 @@
 <thead>
 <tr>
 <th>函数</th>
-<th>$f(\mathbf X)\ =\ \frac 12 x_1^2+2x_2^2+5x_1-x_2$<br>$\mathbf X \in \mathbb R^2$</th>
-<th>$\begin{split}  f(\mathbf X)\ =\ &amp;3(1-x_1)^2e^{-x_1^2-(x_2+1)^2} \\ &amp; - (2x_1-10x_1^3-10x_2^5)e^{-x_1^2-x_2^2} \\ &amp;- \frac 13e^{-(x_1+1)^2-x_2^2}  \end{split}$<br>$\mathbf X \in \mathbb R^2$</th>
+<th>$f(\mathbf X)\ =\ \frac 12 x_1^2+2x_2^2+5x_1-x_2$<br><br>$\mathbf X \in \mathbb R^2$</th>
+<th>$f(\mathbf X)\ =(x_1^3+x_2^2-x_1)e^{-x_1^2-x_2^2}$<br><br>$\mathbf X \in \mathbb R^2$</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>梯度</td>
 <td>$\nabla f(\mathbf X)=\begin{bmatrix}x_1+5 \\ 4x_2-1\\ \end{bmatrix}$</td>
-<td><img src="https://s2.ax1x.com/2019/09/25/uErbPs.png" alt="P2梯度"></td>
+<td>$\nabla f(\mathbf X)=\begin{bmatrix}(-2x_1^4-2x_1x_2^2+5x_1^2-1)e^{-x_1^2-x_2^2}\\ (-2x_1^3x_2-2x_2^3+2x_1x_2+2x_2)e^{-x_1^2-x_2^2}\\ \end{bmatrix}$</td>
 </tr>
 <tr>
 <td>海森<br>矩阵</td>
 <td>$\nabla ^2 f(\mathbf X)=\begin{bmatrix} \begin{split}&amp;1\ \  &amp;0\\ &amp;0 &amp;4\\ \end{split}\end{bmatrix}$</td>
-<td><img src="https://s2.ax1x.com/2019/09/25/uErTaQ.png" alt="P2海森矩阵"></td>
+<td>$\nabla ^2f(\mathbf X)=\begin{bmatrix} \begin{split}&amp;F_1e^{-x_1^2-x_2^2}\ \  &amp;F_2^{-x_1^2-x_2^2}\\ &amp;F_3e^{-x_1^2-x_2^2} &amp;F_4e^{-x_1^2-x_2^2}\\ \end{split}\end{bmatrix}$<br>$F_1 = 4x_1^5+4x_1^2x_2^2-18x_1^3-2x_2^2+12x_1\\F_2=F_3=4x_1^4x_2+4x_1x_2^3-10x_1^2x_2-4x_1x_2+2x_2\\F_4=4x_1^3x_2^2+4x_2^4-2x_1^3-4x_1x_2^2-10x_2^2+2x_1+2$</td>
 </tr>
 </tbody>
 </table>
@@ -490,7 +490,7 @@ min \ \ f(\mathbf x),\ \ \mathbf x\in\mathbb R^n</script><p>我们总是希望$f
 </thead>
 <tbody>
 <tr>
-<td>1. 输入，并置初始梯度二范数$\begin{Vmatrix}\phi(x) \end{Vmatrix}_2=2\epsilon$<br>2. while($\begin{Vmatrix}\phi(x) \end{Vmatrix}_2&gt;\epsilon$):<br>3.     $x=x-\lambda \phi(x)$ <br>4. 输出$x$</td>
+<td>1. 输入，并置初始梯度二范数$\begin{Vmatrix}\phi(x) \end{Vmatrix}_2=2\epsilon$<br>2. while($\begin{Vmatrix}\phi(x) \end{Vmatrix}_2&gt;\epsilon$):<br>3. $\ \ \ \ $$x=x-\lambda \phi(x)$ <br>4. 输出$x$</td>
 </tr>
 </tbody>
 </table>
@@ -511,7 +511,7 @@ min \ \ f(\mathbf x),\ \ \mathbf x\in\mathbb R^n</script><p>我们总是希望$f
 <tbody>
 <tr>
 <td><img src="https://s2.ax1x.com/2019/09/25/uZRedx.png" alt="问题1迭代路径"></td>
-<td><img src="https://s2.ax1x.com/2019/09/25/uZRELR.png" alt="问题2迭代路径"></td>
+<td><img src="https://s2.ax1x.com/2019/09/26/unbNjI.png" alt="问题2迭代路径"></td>
 </tr>
 </tbody>
 </table>
@@ -558,21 +558,94 @@ x_{k+1}=x_k-\frac{f(x_k)}{f'(x_k)}</script><p>相应的几何解释如图。</p>
 <p>再来说说为什么牛顿法收敛快的直观理解。</p>
 <p>梯度下降法用最速下降方向作为当前点处的前进方向，实质上是一种贪心算法；而牛顿法利用二阶导数信息看得更远，不仅要当前下降快，还要走了一步之后下降也快，这是通过新增的海森矩阵逆矩阵对原来的最速下降方向进行修正实现的。牛顿法与梯度下降法寻优的示意图如图。</p>
 <p><img src="https://s2.ax1x.com/2019/09/26/unVSAg.png" alt="梯度法与牛顿法的迭代路径比较"></p>
-<h4 id="2-2-2-算法实现"><a href="#2-2-2-算法实现" class="headerlink" title="2.2.2. 算法实现"></a>2.2.2. 算法实现</h4><h4 id="2-2-3-变体"><a href="#2-2-3-变体" class="headerlink" title="2.2.3. 变体"></a>2.2.3. 变体</h4><hr>
+<h4 id="2-2-2-算法实现"><a href="#2-2-2-算法实现" class="headerlink" title="2.2.2. 算法实现"></a>2.2.2. 算法实现</h4><p>综上，牛顿法的伪代码为</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>输入：梯度$\phi(x)$，海森矩阵$H(x)$，收敛阈值$\epsilon$，初始点$x_0$<br>输出：局部极小点$\hat x$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 输入，并置初始梯度二范数$\begin{Vmatrix}\phi(x) \end{Vmatrix}_2=2\epsilon$<br>2. while($\begin{Vmatrix}\phi(x) \end{Vmatrix}_2&gt;\epsilon$):<br>3. $\ \ \ \ $$x=x-H^{-1} \phi(x)$ <br>4. 输出$x$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>用梯度下降法求解Problem 1的Python代码为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">epsilon = <span class="number">1e-5</span></span><br><span class="line">grad_l2 = <span class="number">100</span></span><br><span class="line">x       = np.array([<span class="number">25</span>,<span class="number">15</span>]).reshape([<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line">path    = []</span><br><span class="line">itera   = <span class="number">0</span></span><br><span class="line">H = np.array([[<span class="number">1</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">4</span>]])  <span class="comment"># Hessian Matrix</span></span><br><span class="line"><span class="keyword">while</span>(grad_l2 &gt; epsilon):</span><br><span class="line">    itera += <span class="number">1</span></span><br><span class="line">    path.append(x)</span><br><span class="line">    <span class="comment"># iteration rule: xk+1 = xk - inv(H) * gradient</span></span><br><span class="line">    grad = np.array([x[<span class="number">0</span>,<span class="number">0</span>]+<span class="number">5</span>, <span class="number">4</span>*x[<span class="number">1</span>,<span class="number">0</span>]<span class="number">-1</span>]).reshape([<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line">    x = x - np.matmul(np.linalg.inv(H), grad)</span><br><span class="line">    grad_l2 = np.linalg.norm(grad, ord=<span class="number">2</span>)</span><br><span class="line">print(<span class="string">"Newton's Method ends after %d iterations"</span>%itera)</span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure>
+<p>输出为（其中一次迭代为初始点，实际一步迭代寻到最优解）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Newton<span class="string">'s Method ends after 2 iterations</span></span><br><span class="line"><span class="string">[[-5.  ]</span></span><br><span class="line"><span class="string"> [ 0.25]]</span></span><br></pre></td></tr></table></figure>
+<p>设置初始点为不同起点，Problem 1和Problem 2的迭代路径为</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Problem 1 迭代路径</th>
+<th>Problem 2 迭代路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="https://s2.ax1x.com/2019/09/26/unyndP.png" alt="牛顿法求解问题1迭代路径"></td>
+<td><img src="https://s2.ax1x.com/2019/09/26/unbtgA.png" alt="牛顿法求解问题2迭代路径"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>对于问题1（凸），无论起点如何，均一步迭代达到收敛点，这是因为二次目标函数的梯度本身就是仿射函数，在任意点处用一阶泰勒展开得到的就是精确的梯度本身而非近似，所以一步迭代就找到了最优解。</p>
+<p>而对于问题2（非凸），牛顿法也体现为初值敏感。图中给定的三个初值点，分别收敛到了极小点、极大点和鞍点。需要说明的是，梯度下降法是不会收敛到极大点的，而牛顿法可能收敛到极大点。根本原因是牛顿法的推导完全是由零梯度代数方程推得的，所以算法只能保证最后的收敛解处梯度为零。直接原因是牛顿法对最速下降方向进行了修改，使得牛顿法的前进方向可能不是下降方向（即不满足$\nabla f(\mathbf x)^T\Delta\mathbf x&lt;0$）。</p>
+<p>除此之外，牛顿法的收敛性也不太好，在很多初值点处均出现了迭代发散的情况。</p>
+<p>上述问题均表明：牛顿法需要改良。于是，就出现了一系列牛顿法的变体。</p>
+<h4 id="2-2-3-变体"><a href="#2-2-3-变体" class="headerlink" title="2.2.3. 变体"></a>2.2.3. 变体</h4><p>（1）阻尼牛顿法</p>
+<p>牛顿法的步长固定为1，这在一定程度上加剧了算法的发散问题。针对这个问题，阻尼牛顿法在牛顿法基础上，增加一个可变步长$\lambda_k$，并在每轮迭代中通过一维搜索来确定相应取值。</p>
+<p>修改后的阻尼牛顿法算法流程：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>输入：梯度$\phi(x)$，海森矩阵$H(x)$，收敛阈值$\epsilon$，初始点$x_0$<br>输出：局部极小点$\hat x$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 输入，并置初始梯度二范数$\begin{Vmatrix}\phi(x) \end{Vmatrix}_2=2\epsilon$<br>2. while($\begin{Vmatrix}\phi(x) \end{Vmatrix}_2&gt;\epsilon$):<br>3. $\ \ \ \ <script type="math/tex">\lambda_k=arg\,\min_{\lambda}\ {f(x-\lambda H^{-1}\phi(x))}$<br />4. $\ \ \ \</script>x=x-\lambda_kH^{-1} \phi(x)$<br>5. 输出$x$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>（2）修正牛顿法</p>
+<p>牛顿法的迭代格式（$x=x-H^{-1} \phi(x)$）中涉及到海森矩阵求逆。此时，如果海森矩阵奇异，那么算法就无法继续。</p>
+<p>另外，牛顿法的前进方向还可能不是下降方向，导致最终可能收敛至极大点。这一问题已经暴露在上面问题2的求解中。现在给出详细的论述：</p>
+<p>若牛顿方向【$-H^{-1} \nabla f(x)$】，对任意梯度$\nabla f(x)$满足</p>
+<script type="math/tex; mode=display">
+-\nabla f(x)^TH^{-1}\nabla f(x)<0</script><p>即海森矩阵$H$正定时，则牛顿法能够保证每一步的前进方向都是下降方向。然而，牛顿法中的海森矩阵$H$往往无法满足这一要求，导致前进方向可能变成上升方向。</p>
+<p>修正牛顿法就是针对这一问题（奇异 or 非正定），对原始的海森矩阵$H$进行修正，保证其正定性。</p>
+<p>一种最基本的修正方法是给原来的海森矩阵$H$加上一定系数的单位矩阵，得到保证正定性的修正海森矩阵$H’$，即</p>
+<script type="math/tex; mode=display">
+H' = H + \gamma I</script><p>系数$\gamma$的选择应在保证$H’$正定性的前提下尽可能小。</p>
+<p>修改后的修正牛顿法算法流程：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>输入：梯度$\phi(x)$，海森矩阵$H(x)$，收敛阈值$\epsilon$，初始点$x_0$<br>输出：局部极小点$\hat x$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 输入，并置初始梯度二范数$\begin{Vmatrix}\phi(x) \end{Vmatrix}_2=2\epsilon$<br>2. while($\begin{Vmatrix}\phi(x) \end{Vmatrix}_2&gt;\epsilon$):<br>3. $\ \ \ \ $按照修正方法将$H$修正成$H’$<br>4. $\ \ \ \ $$x=x-H’^{-1} \phi(x)$<br>5. 输出$x$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>（3）拟牛顿法</p>
+<p>注意到，牛顿法在每次迭代的时候都要更新海森矩阵，并求逆，这个工作的计算量是巨大的。</p>
+<p>针对这个问题，拟牛顿法就是试图通过某种方法，利用梯度信息来直接构造海森矩阵的逆矩阵，从而减小每轮迭代的计算量。这一构造方法有很多，由此也就形成了不同的拟牛顿法。因为内容较多，所以单独开一节介绍拟牛顿法这一类方法。</p>
+<hr>
 <h3 id="2-3-拟牛顿法"><a href="#2-3-拟牛顿法" class="headerlink" title="2.3. 拟牛顿法"></a>2.3. 拟牛顿法</h3><h4 id="2-3-1-原理推导"><a href="#2-3-1-原理推导" class="headerlink" title="2.3.1. 原理推导"></a>2.3.1. 原理推导</h4><h4 id="2-3-2-算法实现"><a href="#2-3-2-算法实现" class="headerlink" title="2.3.2. 算法实现"></a>2.3.2. 算法实现</h4><hr>
-<h3 id="2-4-共轭梯度法"><a href="#2-4-共轭梯度法" class="headerlink" title="2.4. 共轭梯度法"></a>2.4. 共轭梯度法</h3><h4 id="2-4-1-原理推导"><a href="#2-4-1-原理推导" class="headerlink" title="2.4.1. 原理推导"></a>2.4.1. 原理推导</h4><h4 id="2-4-2-算法实现"><a href="#2-4-2-算法实现" class="headerlink" title="2.4.2. 算法实现"></a>2.4.2. 算法实现</h4><ul>
-<li><p>牛顿法</p>
-<p>​        牛顿法的迭代格式和梯度下降一致，其区别在于其前进方向对负梯度方向用目标函数海森矩阵进行了修正，且步长固定为1，实现了二阶收敛。</p>
-<p>​        牛顿法的问题在于收敛性不好。其迭代格式中涉及到海森矩阵求逆，若海森矩阵奇异则该方法难以为继；即使非奇异，也有可能因为非正定而使得前进方向不是目标函数的下降方向</p>
-</li>
-<li><p>阻尼牛顿法</p>
-<p>​        在牛顿法基础上，增加步长的概念，每轮迭代的前进步长由一维搜索确定最优值。</p>
-</li>
-<li><p>修正牛顿法</p>
-<p>​        在牛顿法基础上，对每一步迭代的海森矩阵进行修正，修正方法是海森矩阵+单位矩阵*系数，从而保证修正后的海森矩阵的正定性，确保每一步前进方向都是目标函数值的下降方向。</p>
-</li>
-</ul>
-<h2 id="3-参考文献"><a href="#3-参考文献" class="headerlink" title="3. 参考文献"></a>3. 参考文献</h2><p>[1] <a href="https://cloud.tsinghua.edu.cn/f/f9a80c011a7a4dceae95/" target="_blank" rel="noopener">Boyd S, Vandenberghe L. Convex optimization[M]. Cambridge university press, 2004.</a></p>
+<h3 id="2-4-共轭梯度法"><a href="#2-4-共轭梯度法" class="headerlink" title="2.4. 共轭梯度法"></a>2.4. 共轭梯度法</h3><h4 id="2-4-1-原理推导"><a href="#2-4-1-原理推导" class="headerlink" title="2.4.1. 原理推导"></a>2.4.1. 原理推导</h4><h4 id="2-4-2-算法实现"><a href="#2-4-2-算法实现" class="headerlink" title="2.4.2. 算法实现"></a>2.4.2. 算法实现</h4><h2 id="3-参考文献"><a href="#3-参考文献" class="headerlink" title="3. 参考文献"></a>3. 参考文献</h2><p>[1] <a href="https://cloud.tsinghua.edu.cn/f/f9a80c011a7a4dceae95/" target="_blank" rel="noopener">Boyd S, Vandenberghe L. Convex optimization[M]. Cambridge university press, 2004.</a></p>
 <p>[2] 陈宝林，最优化理论与算法，清华大学出版社，2005</p>
 
       
