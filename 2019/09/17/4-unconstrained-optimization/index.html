@@ -107,7 +107,8 @@
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/25/uZRELR.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/25/ueFlOe.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/19/nqbFxg.png">
-<meta property="og:updated_time" content="2019-09-26T04:30:32.294Z">
+<meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unVSAg.png">
+<meta property="og:updated_time" content="2019-09-26T10:06:57.923Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="无约束优化算法">
 <meta name="twitter:description" content="无约束问题的优化，就是给定一个函数求取其最大/小值。按照优化算法是否利用了这个函数的导数（梯度、海森矩阵），相应算法可以分为利用导数的优化算法（下降法、牛顿法、……）和不利用导数的优化算法（模式搜索法、Powell法、……）。鉴于实际应用中前者效果更好，这里介绍其中最为常用的梯度下降法、牛顿法、拟牛顿法、共轭梯度法。 在运筹学中，其实无约束优化的应用场景并不多见，各种实际问题通常建模为有约束优化问">
@@ -453,16 +454,16 @@
 <h2 id="1-无约束优化的最优性条件"><a href="#1-无约束优化的最优性条件" class="headerlink" title="1. 无约束优化的最优性条件"></a>1. 无约束优化的最优性条件</h2><p>对于一个优化问题，若要找到其最优解，首先就要明确最优解有什么性质，满足什么条件，然后才能够据此去推导求解的算法。最优解满足的条件（必要、充分、充要）称为最优性条件。<a href="https://cbb1996.com/2019/07/07/optimizationbase/" target="_blank" rel="noopener">（戳这里回顾）</a></p>
 <p>对于求解</p>
 <script type="math/tex; mode=display">
-min\ \ f(\mathbf x)</script><p>其一阶必要条件是</p>
+min\ \ f(\mathbf x),\ \ \mathbf x\in\mathbb R^n</script><p>其一阶必要条件是</p>
 <script type="math/tex; mode=display">
 \nabla f(\mathbf x)=\mathbf 0</script><p>特别地，若$f(\mathbf x)$是凸函数，则上述条件是一个充分必要条件。</p>
 <p>通常，我们把这一个必要条件作为收敛判据，即$|\nabla f(\mathbf {x^k})|_2\le\epsilon$时结束迭代。对于凸优化问题，此时找到的解$\mathbf {x^k}$就是全局最优解（严格来说是无限接近最优解的次优解，详见Boyd在[1]中给出的证明）；而对于非凸优化问题，这个必要条件只能保证$\mathbf {x^k}$是驻点（极大点、极小点、鞍点），通常极大点与鞍点都可以被排除，而无法区分极小点$\mathbf {x^k}$是全局最优解还是局部最优解。这也正是非凸问题远远难于凸问题的原因。</p>
-<h2 id="2-无约束优化算法"><a href="#2-无约束优化算法" class="headerlink" title="2. 无约束优化算法"></a>2. 无约束优化算法</h2><p>利用最优性条件，我们将优化问题【$min\ \ f(\mathbf x)$】转换成了一个代数方程【$\nabla f(\mathbf x)=0$】。</p>
+<h2 id="2-无约束优化算法"><a href="#2-无约束优化算法" class="headerlink" title="2. 无约束优化算法"></a>2. 无约束优化算法</h2><p>利用最优性条件，我们将优化问题【$min\ \ f(\mathbf x)$】转换成了一个代数方程【$\nabla f(\mathbf x)=\mathbf 0$】。</p>
 <p>当这个代数方程可解时，我们就直接获得了该问题的解析解。如</p>
 <script type="math/tex; mode=display">
 min \ \ f(\mathbf x)=\frac12 \mathbf x^TQ\mathbf x+P^T\mathbf x+R</script><p>则解代数方程</p>
 <script type="math/tex; mode=display">
-\nabla f(\mathbf x)=Q\mathbf x+P=0</script><p>可直接得到解析解</p>
+\nabla f(\mathbf x)=Q\mathbf x+P=\mathbf 0</script><p>可直接得到解析解</p>
 <script type="math/tex; mode=display">
 \mathbf x=-Q^{-1}P</script><p>但是，更多的时候，我们无法获得$\nabla f(\mathbf x)=0$的解析解，这个时候就需要迭代的数值算法来求解该代数方程了，相应的算法有牛顿法、拟牛顿法等。除此之外，梯度下降法、共轭梯度法直接从凸优化问题的角度给出了迭代的数值算法。</p>
 <h3 id="2-1-梯度下降法"><a href="#2-1-梯度下降法" class="headerlink" title="2.1. 梯度下降法"></a>2.1. 梯度下降法</h3><h4 id="2-1-1-原理推导"><a href="#2-1-1-原理推导" class="headerlink" title="2.1.1. 原理推导"></a>2.1.1. 原理推导</h4><p>梯度下降法是最常用的无约束优化算法，具有一阶收敛性。特点是迭代格式简单，但是收敛速度较慢。</p>
@@ -473,7 +474,7 @@ f(\mathbf {x_{k+1}}) \ge f(\mathbf {x_k})+\nabla f(\mathbf {x_k})(\mathbf {x_{k+
 <p>在众多下降方向中，负梯度方向是下降最快的方向（在欧式度量意义下）。该结论的详细证明见[2]。</p>
 <p>那么，对于</p>
 <script type="math/tex; mode=display">
-min \ \ f(\mathbf x)</script><p>我们总是希望$f(\mathbf {x_k})$的值随着迭代的进行迅速减小，所以“让迭代点$\mathbf {x_k}$沿着目标函数值下降最快的方向（即负梯度方向）前进”这个思路就显得很自然了。这正是梯度下降法的基本思想，因为负梯度方向是最速下降方向，所以梯度下降法又名最速下降方法。</p>
+min \ \ f(\mathbf x),\ \ \mathbf x\in\mathbb R^n</script><p>我们总是希望$f(\mathbf {x_k})$的值随着迭代的进行迅速减小，所以“让迭代点$\mathbf {x_k}$沿着目标函数值下降最快的方向（即负梯度方向）前进”这个思路就显得很自然了。这正是梯度下降法的基本思想，因为负梯度方向是最速下降方向，所以梯度下降法又名最速下降方法。</p>
 <p>路线的确定光有方向还不够，还得有前进的距离（称为步长，只有在方向向量是单位向量的时候才真正是前进的距离），记为$\lambda_k$，则有梯度下降法的迭代格式为</p>
 <script type="math/tex; mode=display">
 \mathbf {x_{k+1}} = \mathbf {x_k} - \lambda_k \nabla f(\mathbf {x_k})</script><p>出于简便性的考虑，我们通常固定步长为一个常数$\lambda$。</p>
@@ -489,9 +490,7 @@ min \ \ f(\mathbf x)</script><p>我们总是希望$f(\mathbf {x_k})$的值随着
 </thead>
 <tbody>
 <tr>
-<td>1. 输入，并置初始梯度二范数$\</td>
-<td>\phi (x)\</td>
-<td>_2=2\epsilon$<br>2. while($\begin{Vmatrix}\phi(x) \end{Vmatrix}_2&gt;\epsilon$):<br>3.     $x=x-\lambda \phi(x)$ <br>4. 输出$x$</td>
+<td>1. 输入，并置初始梯度二范数$\begin{Vmatrix}\phi(x) \end{Vmatrix}_2=2\epsilon$<br>2. while($\begin{Vmatrix}\phi(x) \end{Vmatrix}_2&gt;\epsilon$):<br>3.     $x=x-\lambda \phi(x)$ <br>4. 输出$x$</td>
 </tr>
 </tbody>
 </table>
@@ -531,13 +530,37 @@ min \ \ f(\mathbf x)</script><p>我们总是希望$f(\mathbf {x_k})$的值随着
 <p><img src="https://s2.ax1x.com/2019/09/25/ueFlOe.png" alt="冲量梯度下降示意"></p>
 <p>扯一点题外话，尽管那么多做优化的前人提了这么多超线性的收敛方法（后面会介绍其中3种），但是在深度学习领域，优化问题（最小化损失函数）的求解还是清一色的梯度下降（加上各种定语）……超线性的方法反而存在这样那样的问题。曾经有一个前辈在讲座中评论这个，大意是说，作为一个做优化的，他觉得，不是这些超线性方法不适合这些问题，而是还没有找到运用这些方法去解决这些问题的合适途径。</p>
 <p>emmmm，革命尚未成功，同志仍需努力。</p>
-<h3 id="2-2-牛顿法"><a href="#2-2-牛顿法" class="headerlink" title="2.2. 牛顿法"></a>2.2. 牛顿法</h3><h4 id="2-2-1-原理推导"><a href="#2-2-1-原理推导" class="headerlink" title="2.2.1. 原理推导"></a>2.2.1. 原理推导</h4><p>牛顿法也是一种常用的无约束优化算法，具有二阶收敛性。</p>
+<hr>
+<h3 id="2-2-牛顿法"><a href="#2-2-牛顿法" class="headerlink" title="2.2. 牛顿法"></a>2.2. 牛顿法</h3><h4 id="2-2-1-原理推导"><a href="#2-2-1-原理推导" class="headerlink" title="2.2.1. 原理推导"></a>2.2.1. 原理推导</h4><p>牛顿法是一种求解代数方程组$F(\mathbf x)=\mathbf 0$的数值算法，因为优化问题可以通过最优性条件转化为一组代数方程（零梯度方程），所以牛顿法也可以用于求解优化问题（二阶优化算法，速度快）。</p>
+<p>首先来看牛顿法求解代数方程组的代数原理与几何解释。</p>
+<p>（1）代数原理</p>
+<p>对于一个函数向量【$F(\mathbf x),\ \mathbf x \in \mathbb R^n$】，在点$\mathbf {x_k}$处做一阶泰勒展开，有</p>
+<script type="math/tex; mode=display">
+F(\mathbf x)=F(\mathbf {x_k})+J(\mathbf {x_k})(\mathbf x - \mathbf {x_k})</script><p>其中，$J(\mathbf {x_k})$是函数向量在$\mathbf {x_k}$处的雅可比（Jacobi）矩阵。</p>
+<p>因为我们要求解代数方程组$F(\mathbf x)=\mathbf 0$，所以由上述一阶泰勒展开式可以得到一个近似解为</p>
+<script type="math/tex; mode=display">
+\mathbf {x_{k+1}}=\mathbf {x_k}-J(\mathbf {x_k})^{-1}F(\mathbf {x_k})</script><p>这正是牛顿法<strong>求解代数方程组</strong>的迭代格式。</p>
+<p>（2）几何解释</p>
+<p>上述迭代格式有着强烈的几何意义。</p>
+<p>为便于叙述与可视化，我们选取一个变量、一个方程的情况。此时，牛顿法求解代数方程的迭代格式变为</p>
+<script type="math/tex; mode=display">
+x_{k+1}=x_k-\frac{f(x_k)}{f'(x_k)}</script><p>相应的几何解释如图。</p>
 <p><img src="https://s2.ax1x.com/2019/09/19/nqbFxg.png" alt="牛顿法几何解释"></p>
-<center>图n 牛顿法的几何解释</center>
-
-<p>牛顿法视为特殊的梯度下降法，即自适应步长的梯度下降法。这句话是错的，因为海森矩阵改变了前进方向。</p>
-<p>在梯度下降法中，下降步长$\lambda$是一个人为指定的超参数，小了则迭代次数极多，大了则迭代发散</p>
-<h4 id="2-2-2-算法实现"><a href="#2-2-2-算法实现" class="headerlink" title="2.2.2. 算法实现"></a>2.2.2. 算法实现</h4><h4 id="2-2-3-变体"><a href="#2-2-3-变体" class="headerlink" title="2.2.3. 变体"></a>2.2.3. 变体</h4><h3 id="2-3-拟牛顿法"><a href="#2-3-拟牛顿法" class="headerlink" title="2.3. 拟牛顿法"></a>2.3. 拟牛顿法</h3><h4 id="2-3-1-原理推导"><a href="#2-3-1-原理推导" class="headerlink" title="2.3.1. 原理推导"></a>2.3.1. 原理推导</h4><h4 id="2-3-2-算法实现"><a href="#2-3-2-算法实现" class="headerlink" title="2.3.2. 算法实现"></a>2.3.2. 算法实现</h4><h3 id="2-4-共轭梯度法"><a href="#2-4-共轭梯度法" class="headerlink" title="2.4. 共轭梯度法"></a>2.4. 共轭梯度法</h3><h4 id="2-4-1-原理推导"><a href="#2-4-1-原理推导" class="headerlink" title="2.4.1. 原理推导"></a>2.4.1. 原理推导</h4><h4 id="2-4-2-算法实现"><a href="#2-4-2-算法实现" class="headerlink" title="2.4.2. 算法实现"></a>2.4.2. 算法实现</h4><ul>
+<p>图中黑色粗线是原函数$f(x)$，在点$(x_k,\ f(x_k))$处作一条切线（正是$f(x)$在该点处的一阶泰勒展开），与$x$轴交于$x_{k+1}$。牛顿法迭代格式的几何意义就是用切线来近似原函数，然后用切线的零点来作为原函数曲线零点的近似解。重复上述过程，直到收敛（$f(x_k)&lt;\epsilon$）。</p>
+<p>现在我们用牛顿法来求解优化问题$min\ f(\mathbf x)$，即，使用零梯度方程组$\nabla f(\mathbf x)=\mathbf 0$替代原方程组$F(\mathbf x)=\mathbf 0$。</p>
+<p>先对零梯度方程组做一个在$\mathbf {x_k}$处的一阶泰勒展开</p>
+<script type="math/tex; mode=display">
+\nabla f(\mathbf x)=\nabla f(\mathbf {x_k})+\nabla ^2 f(\mathbf {x_k})(\mathbf x - \mathbf {x_k}) = \mathbf 0</script><p>由上式可以推出<strong>牛顿法解优化问题的迭代格式</strong>为</p>
+<script type="math/tex; mode=display">
+\mathbf {x_{k+1}}
+=
+\mathbf {x_k}-\nabla^2f(\mathbf {x_k})^{-1}\nabla f(\mathbf {x_k})</script><p>这咋一看，好像就是把梯度下降法里面的步长$\lambda_k$换成了海森（Hessian）矩阵逆矩阵$\nabla^2f(\mathbf {x_k})^{-1}$，以至于我一度误以为牛顿法就是自适应步长的梯度下降法。这种说法是错误的，因为步长$\lambda_k$是一个标量，不会改变前进方向，但是$\nabla^2f(\mathbf {x_k})^{-1}$是一个矩阵，数学上是对前进方向向量的线性变换，物理上就是对前进方向的修正。牛顿法的前进步长固定为1。</p>
+<p>再来说说为什么牛顿法收敛快的直观理解。</p>
+<p>梯度下降法用最速下降方向作为当前点处的前进方向，实质上是一种贪心算法；而牛顿法利用二阶导数信息看得更远，不仅要当前下降快，还要走了一步之后下降也快，这是通过新增的海森矩阵逆矩阵对原来的最速下降方向进行修正实现的。牛顿法与梯度下降法寻优的示意图如图。</p>
+<p><img src="https://s2.ax1x.com/2019/09/26/unVSAg.png" alt="梯度法与牛顿法的迭代路径比较"></p>
+<h4 id="2-2-2-算法实现"><a href="#2-2-2-算法实现" class="headerlink" title="2.2.2. 算法实现"></a>2.2.2. 算法实现</h4><h4 id="2-2-3-变体"><a href="#2-2-3-变体" class="headerlink" title="2.2.3. 变体"></a>2.2.3. 变体</h4><hr>
+<h3 id="2-3-拟牛顿法"><a href="#2-3-拟牛顿法" class="headerlink" title="2.3. 拟牛顿法"></a>2.3. 拟牛顿法</h3><h4 id="2-3-1-原理推导"><a href="#2-3-1-原理推导" class="headerlink" title="2.3.1. 原理推导"></a>2.3.1. 原理推导</h4><h4 id="2-3-2-算法实现"><a href="#2-3-2-算法实现" class="headerlink" title="2.3.2. 算法实现"></a>2.3.2. 算法实现</h4><hr>
+<h3 id="2-4-共轭梯度法"><a href="#2-4-共轭梯度法" class="headerlink" title="2.4. 共轭梯度法"></a>2.4. 共轭梯度法</h3><h4 id="2-4-1-原理推导"><a href="#2-4-1-原理推导" class="headerlink" title="2.4.1. 原理推导"></a>2.4.1. 原理推导</h4><h4 id="2-4-2-算法实现"><a href="#2-4-2-算法实现" class="headerlink" title="2.4.2. 算法实现"></a>2.4.2. 算法实现</h4><ul>
 <li><p>牛顿法</p>
 <p>​        牛顿法的迭代格式和梯度下降一致，其区别在于其前进方向对负梯度方向用目标函数海森矩阵进行了修正，且步长固定为1，实现了二阶收敛。</p>
 <p>​        牛顿法的问题在于收敛性不好。其迭代格式中涉及到海森矩阵求逆，若海森矩阵奇异则该方法难以为继；即使非奇异，也有可能因为非正定而使得前进方向不是目标函数的下降方向</p>
@@ -549,8 +572,8 @@ min \ \ f(\mathbf x)</script><p>我们总是希望$f(\mathbf {x_k})$的值随着
 <p>​        在牛顿法基础上，对每一步迭代的海森矩阵进行修正，修正方法是海森矩阵+单位矩阵*系数，从而保证修正后的海森矩阵的正定性，确保每一步前进方向都是目标函数值的下降方向。</p>
 </li>
 </ul>
-<h2 id="3-参考文献"><a href="#3-参考文献" class="headerlink" title="3. 参考文献"></a>3. 参考文献</h2><p>[1]</p>
-<p>[2]</p>
+<h2 id="3-参考文献"><a href="#3-参考文献" class="headerlink" title="3. 参考文献"></a>3. 参考文献</h2><p>[1] <a href="https://cloud.tsinghua.edu.cn/f/f9a80c011a7a4dceae95/" target="_blank" rel="noopener">Boyd S, Vandenberghe L. Convex optimization[M]. Cambridge university press, 2004.</a></p>
+<p>[2] 陈宝林，最优化理论与算法，清华大学出版社，2005</p>
 
       
     </div>
