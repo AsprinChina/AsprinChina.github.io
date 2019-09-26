@@ -108,7 +108,7 @@
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unVSAg.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unyndP.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unbtgA.png">
-<meta property="og:updated_time" content="2019-09-26T15:46:13.952Z">
+<meta property="og:updated_time" content="2019-09-26T16:02:00.619Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="无约束优化算法">
 <meta name="twitter:description" content="无约束问题的优化，就是给定一个函数求取其最大/小值。按照优化算法是否利用了这个函数的导数（梯度、海森矩阵），相应算法可以分为利用导数的优化算法（下降法、牛顿法、……）和不利用导数的优化算法（模式搜索法、Powell法、……）。鉴于实际应用中前者效果更好，这里介绍其中最为常用的梯度下降法、牛顿法、拟牛顿法、共轭梯度法。 在运筹学中，其实无约束优化的应用场景并不多见，各种实际问题通常建模为有约束优化问">
@@ -568,7 +568,7 @@ x_{k+1}=x_k-\frac{f(x_k)}{f'(x_k)}</script><p>相应的几何解释如图。</p>
 </thead>
 <tbody>
 <tr>
-<td>1. 输入，并置初始梯度二范数$\begin{Vmatrix}\phi(x) \end{Vmatrix}_2=2\epsilon$<br>2. while($\begin{Vmatrix}\phi(x) \end{Vmatrix}_2&gt;\epsilon$):<br>3. $\ \ \ \ $$x=x-H^{-1} \phi(x)$ <br>4. 输出$x$</td>
+<td>1. 输入，并置初始梯度二范数$\begin{Vmatrix}\phi(x) \end{Vmatrix}_2=2\epsilon$<br>2. while($\begin{Vmatrix}\phi(x) \end{Vmatrix}_2&gt;\epsilon$):<br>3. $\ \ \ \ $$x=x-H(x)^{-1} \phi(x)$ <br>4. 输出$x$</td>
 </tr>
 </tbody>
 </table>
@@ -594,6 +594,7 @@ x_{k+1}=x_k-\frac{f(x_k)}{f'(x_k)}</script><p>相应的几何解释如图。</p>
 </tbody>
 </table>
 </div>
+<p>首先，对比梯度下降法的求解轨迹与牛顿法的求解轨迹，直观发现牛顿法的迭代点数量远远少于梯度下降法，实例证明了牛顿法迭代速度远快于梯度下降法。</p>
 <p>对于问题1（凸），无论起点如何，均一步迭代达到收敛点，这是因为二次目标函数的梯度本身就是仿射函数，在任意点处用一阶泰勒展开得到的就是精确的梯度本身而非近似，所以一步迭代就找到了最优解。</p>
 <p>而对于问题2（非凸），牛顿法也体现为初值敏感。图中给定的三个初值点，分别收敛到了极小点、极大点和鞍点。需要说明的是，梯度下降法是不会收敛到极大点的，而牛顿法可能收敛到极大点。根本原因是牛顿法的推导完全是由零梯度代数方程推得的，所以算法只能保证最后的收敛解处梯度为零。直接原因是牛顿法对最速下降方向进行了修改，使得牛顿法的前进方向可能不是下降方向（即不满足$\nabla f(\mathbf x)^T\Delta\mathbf x&lt;0$）。</p>
 <p>除此之外，牛顿法的收敛性也不太好，在很多初值点处均出现了迭代发散的情况。</p>
@@ -610,7 +611,7 @@ x_{k+1}=x_k-\frac{f(x_k)}{f'(x_k)}</script><p>相应的几何解释如图。</p>
 </thead>
 <tbody>
 <tr>
-<td>1. 输入，并置初始梯度二范数$\begin{Vmatrix}\phi(x) \end{Vmatrix}_2=2\epsilon$<br>2. while($\begin{Vmatrix}\phi(x) \end{Vmatrix}_2&gt;\epsilon$):<br>3. $\ \ \ \ <script type="math/tex">\lambda_k=arg\,\min_{\lambda}\ {f(x-\lambda H^{-1}\phi(x))}$<br />4. $\ \ \ \</script>x=x-\lambda_kH^{-1} \phi(x)$<br>5. 输出$x$</td>
+<td>1. 输入，并置初始梯度二范数$\begin{Vmatrix}\phi(x) \end{Vmatrix}_2=2\epsilon$<br>2. while($\begin{Vmatrix}\phi(x) \end{Vmatrix}_2&gt;\epsilon$):<br>3. $\ \ \ \ <script type="math/tex">\lambda_k=arg\,\min_{\lambda}\ {f(x-\lambda H(x)^{-1}\phi(x))}$<br />4. $\ \ \ \</script>x=x-\lambda_kH(x)^{-1} \phi(x)$<br>5. 输出$x$</td>
 </tr>
 </tbody>
 </table>
@@ -635,7 +636,7 @@ H' = H + \gamma I</script><p>系数$\gamma$的选择应在保证$H’$正定性�
 </thead>
 <tbody>
 <tr>
-<td>1. 输入，并置初始梯度二范数$\begin{Vmatrix}\phi(x) \end{Vmatrix}_2=2\epsilon$<br>2. while($\begin{Vmatrix}\phi(x) \end{Vmatrix}_2&gt;\epsilon$):<br>3. $\ \ \ \ $按照修正方法将$H$修正成$H’$<br>4. $\ \ \ \ $$x=x-H’^{-1} \phi(x)$<br>5. 输出$x$</td>
+<td>1. 输入，并置初始梯度二范数$\begin{Vmatrix}\phi(x) \end{Vmatrix}_2=2\epsilon$<br>2. while($\begin{Vmatrix}\phi(x) \end{Vmatrix}_2&gt;\epsilon$):<br>3. $\ \ \ \ $按照修正方法将$H(x)$修正成$H’(x)$<br>4. $\ \ \ \ $$x=x-H’(x)^{-1} \phi(x)$<br>5. 输出$x$</td>
 </tr>
 </tbody>
 </table>
