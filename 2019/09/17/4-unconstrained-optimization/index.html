@@ -108,7 +108,7 @@
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unVSAg.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unyndP.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unbtgA.png">
-<meta property="og:updated_time" content="2019-09-26T16:02:00.619Z">
+<meta property="og:updated_time" content="2019-09-26T16:14:45.933Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="无约束优化算法">
 <meta name="twitter:description" content="无约束问题的优化，就是给定一个函数求取其最大/小值。按照优化算法是否利用了这个函数的导数（梯度、海森矩阵），相应算法可以分为利用导数的优化算法（下降法、牛顿法、……）和不利用导数的优化算法（模式搜索法、Powell法、……）。鉴于实际应用中前者效果更好，这里介绍其中最为常用的梯度下降法、牛顿法、拟牛顿法、共轭梯度法。 在运筹学中，其实无约束优化的应用场景并不多见，各种实际问题通常建模为有约束优化问">
@@ -451,7 +451,7 @@
 </tbody>
 </table>
 </div>
-<h2 id="1-无约束优化的最优性条件"><a href="#1-无约束优化的最优性条件" class="headerlink" title="1. 无约束优化的最优性条件"></a>1. 无约束优化的最优性条件</h2><p>对于一个优化问题，若要找到其最优解，首先就要明确最优解有什么性质，满足什么条件，然后才能够据此去推导求解的算法。最优解满足的条件（必要、充分、充要）称为最优性条件。<a href="https://cbb1996.com/2019/07/07/optimizationbase/" target="_blank" rel="noopener">（戳这里回顾）</a></p>
+<h2 id="1-无约束优化的最优性条件"><a href="#1-无约束优化的最优性条件" class="headerlink" title="1. 无约束优化的最优性条件"></a>1. 无约束优化的最优性条件</h2><p>对于一个优化问题，若要找到其最优解，首先就要明确最优解有什么性质，满足什么条件，然后才能够据此去推导求解的算法。最优解满足的条件（必要、充分、充要）称为最优性条件。<a href="https://cbb1996.com/2019/07/07/1-optimizationbase/" target="_blank" rel="noopener">（戳这里回顾）</a></p>
 <p>对于求解</p>
 <script type="math/tex; mode=display">
 min\ \ f(\mathbf x),\ \ \mathbf x\in\mathbb R^n</script><p>其一阶必要条件是</p>
@@ -573,7 +573,7 @@ x_{k+1}=x_k-\frac{f(x_k)}{f'(x_k)}</script><p>相应的几何解释如图。</p>
 </tbody>
 </table>
 </div>
-<p>用梯度下降法求解Problem 1的Python代码为</p>
+<p>用牛顿法求解Problem 1的Python代码为</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">epsilon = <span class="number">1e-5</span></span><br><span class="line">grad_l2 = <span class="number">100</span></span><br><span class="line">x       = np.array([<span class="number">25</span>,<span class="number">15</span>]).reshape([<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line">path    = []</span><br><span class="line">itera   = <span class="number">0</span></span><br><span class="line">H = np.array([[<span class="number">1</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">4</span>]])  <span class="comment"># Hessian Matrix</span></span><br><span class="line"><span class="keyword">while</span>(grad_l2 &gt; epsilon):</span><br><span class="line">    itera += <span class="number">1</span></span><br><span class="line">    path.append(x)</span><br><span class="line">    <span class="comment"># iteration rule: xk+1 = xk - inv(H) * gradient</span></span><br><span class="line">    grad = np.array([x[<span class="number">0</span>,<span class="number">0</span>]+<span class="number">5</span>, <span class="number">4</span>*x[<span class="number">1</span>,<span class="number">0</span>]<span class="number">-1</span>]).reshape([<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line">    x = x - np.matmul(np.linalg.inv(H), grad)</span><br><span class="line">    grad_l2 = np.linalg.norm(grad, ord=<span class="number">2</span>)</span><br><span class="line">print(<span class="string">"Newton's Method ends after %d iterations"</span>%itera)</span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure>
 <p>输出为（其中一次迭代为初始点，实际一步迭代寻到最优解）</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Newton<span class="string">'s Method ends after 2 iterations</span></span><br><span class="line"><span class="string">[[-5.  ]</span></span><br><span class="line"><span class="string"> [ 0.25]]</span></span><br></pre></td></tr></table></figure>
