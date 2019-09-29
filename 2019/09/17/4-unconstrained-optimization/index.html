@@ -108,7 +108,8 @@
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unVSAg.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unyndP.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unbtgA.png">
-<meta property="og:updated_time" content="2019-09-26T16:45:04.255Z">
+<meta property="og:image" content="https://s2.ax1x.com/2019/09/29/u31t54.jpg">
+<meta property="og:updated_time" content="2019-09-29T03:16:20.964Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="无约束优化算法">
 <meta name="twitter:description" content="无约束问题的优化，就是给定一个函数求取其最大/小值。按照优化算法是否利用了这个函数的导数（梯度、海森矩阵），相应算法可以分为利用导数的优化算法（下降法、牛顿法、……）和不利用导数的优化算法（模式搜索法、Powell法、……）。鉴于实际应用中前者效果更好，这里介绍其中最为常用的梯度下降法、牛顿法、拟牛顿法、共轭梯度法。 在运筹学中，其实无约束优化的应用场景并不多见，各种实际问题通常建模为有约束优化问">
@@ -548,7 +549,7 @@ x_{k+1}=x_k-\frac{f(x_k)}{f'(x_k)}</script><p>相应的几何解释如图。</p>
 <p><img src="https://s2.ax1x.com/2019/09/19/nqbFxg.png" alt="牛顿法几何解释"></p>
 <p>图中黑色粗线是原函数$f(x)$，在点$(x_k,\ f(x_k))$处作一条切线（正是$f(x)$在该点处的一阶泰勒展开），与$x$轴交于$x_{k+1}$。牛顿法迭代格式的几何意义就是用切线来近似原函数，然后用切线的零点来作为原函数曲线零点的近似解。重复上述过程，直到收敛（$f(x_k)&lt;\epsilon$）。</p>
 <p>现在我们用牛顿法来求解优化问题$min\ f(\mathbf x)$，即，使用零梯度方程组$\nabla f(\mathbf x)=\mathbf 0$替代原方程组$F(\mathbf x)=\mathbf 0$。</p>
-<p>先对零梯度方程组做一个在$\mathbf {x_k}$处的一阶泰勒展开</p>
+<p>先对零梯度方程组中的每一个分量做一个在$\mathbf {x_k}$处的一阶泰勒展开</p>
 <script type="math/tex; mode=display">
 \nabla f(\mathbf x)=\nabla f(\mathbf {x_k})+\nabla ^2 f(\mathbf {x_k})(\mathbf x - \mathbf {x_k}) = \mathbf 0</script><p>由上式可以推出<strong>牛顿法解优化问题的迭代格式</strong>为</p>
 <script type="math/tex; mode=display">
@@ -595,8 +596,8 @@ x_{k+1}=x_k-\frac{f(x_k)}{f'(x_k)}</script><p>相应的几何解释如图。</p>
 </table>
 </div>
 <p>首先，对比梯度下降法的求解轨迹与牛顿法的求解轨迹，直观发现牛顿法的迭代点数量远远少于梯度下降法，实例证明了牛顿法迭代速度远快于梯度下降法。</p>
-<p>对于问题1（凸），无论起点如何，均一步迭代达到收敛点，这是因为二次目标函数的梯度本身就是仿射函数，在任意点处用一阶泰勒展开得到的就是精确的梯度本身而非近似，所以一步迭代就找到了最优解。</p>
-<p>而对于问题2（非凸），牛顿法也体现为初值敏感。图中给定的三个初值点，分别收敛到了极小点、极大点和鞍点。需要说明的是，梯度下降法是不会收敛到极大点的，而牛顿法可能收敛到极大点。根本原因是牛顿法的推导完全是由零梯度代数方程推得的，所以算法只能保证最后的收敛解处梯度为零。直接原因是牛顿法对最速下降方向进行了修改，使得牛顿法的前进方向可能不是下降方向（即不满足$\nabla f(\mathbf x)^T\Delta\mathbf x&lt;0$）。</p>
+<p>对于问题1（凸，二次规划），无论起点如何，均一步迭代达到收敛点，这是因为二次目标函数的梯度本身就是仿射函数，在任意点处用一阶泰勒展开得到的就是精确的梯度本身而非近似，所以一步迭代就找到了最优解。</p>
+<p>而对于问题2（非凸），牛顿法也表现为初值敏感。图中给定的三个初值点，分别收敛到了极小点、极大点和鞍点。需要说明的是，梯度下降法是不会收敛到极大点的，而牛顿法可能收敛到极大点。根本原因是牛顿法的推导完全是由零梯度代数方程推得的，所以算法只能保证最后的收敛解处梯度为零。直接原因是牛顿法对最速下降方向进行了修改，使得牛顿法的前进方向可能不是下降方向（即不满足$\nabla f(\mathbf x)^T\Delta\mathbf x&lt;0$）。</p>
 <p>除此之外，牛顿法的收敛性也不太好，在很多初值点处均出现了迭代发散的情况。</p>
 <p>上述问题均表明：牛顿法需要改良。于是，就出现了一系列牛顿法的变体。</p>
 <h4 id="2-2-3-变体"><a href="#2-2-3-变体" class="headerlink" title="2.2.3. 变体"></a>2.2.3. 变体</h4><p>（1）阻尼牛顿法</p>
@@ -611,7 +612,7 @@ x_{k+1}=x_k-\frac{f(x_k)}{f'(x_k)}</script><p>相应的几何解释如图。</p>
 </thead>
 <tbody>
 <tr>
-<td>1. 输入，并置初始梯度二范数$\begin{Vmatrix}\phi(x) \end{Vmatrix}_2=2\epsilon$<br>2. while($\begin{Vmatrix}\phi(x) \end{Vmatrix}_2&gt;\epsilon$):<br>3. $\lambda _k=arg\,\min_{\lambda}\ {f(x-\lambda H(x)^{-1}\phi(x))}$<br>4. $x=x-\lambda_kH(x)^{-1} \phi(x)$<br>5. 输出$x$</td>
+<td>1. 输入，并置初始梯度二范数$\begin{Vmatrix}\phi(x) \end{Vmatrix}_2=2\epsilon$<br>2. while($\begin{Vmatrix}\phi(x) \end{Vmatrix}_2&gt;\epsilon$):<br>3. $\ \ \ \ $ $\lambda_k=arg\,\min_{\lambda}\ {f(x-\lambda H(x)^{-1}\phi(x))}$<br>4. $\ \ \ \ $ $x=x-\lambda_kH(x)^{-1} \phi(x)$<br>5. 输出$x$</td>
 </tr>
 </tbody>
 </table>
@@ -645,7 +646,75 @@ H' = H + \gamma I</script><p>系数$\gamma$的选择应在保证$H’$正定性�
 <p>注意到，牛顿法在每次迭代的时候都要更新海森矩阵，并求逆，这个工作的计算量是巨大的。</p>
 <p>针对这个问题，拟牛顿法就是试图通过某种方法，利用梯度信息来直接构造海森矩阵的逆矩阵，从而减小每轮迭代的计算量。这一构造方法有很多，由此也就形成了不同的拟牛顿法。因为内容较多，所以单独开一节介绍拟牛顿法这一类方法。</p>
 <hr>
-<h3 id="2-3-拟牛顿法"><a href="#2-3-拟牛顿法" class="headerlink" title="2.3. 拟牛顿法"></a>2.3. 拟牛顿法</h3><h4 id="2-3-1-原理推导"><a href="#2-3-1-原理推导" class="headerlink" title="2.3.1. 原理推导"></a>2.3.1. 原理推导</h4><h4 id="2-3-2-算法实现"><a href="#2-3-2-算法实现" class="headerlink" title="2.3.2. 算法实现"></a>2.3.2. 算法实现</h4><hr>
+<h3 id="2-3-拟牛顿法"><a href="#2-3-拟牛顿法" class="headerlink" title="2.3. 拟牛顿法"></a>2.3. 拟牛顿法</h3><p>上面说到牛顿法有两大问题</p>
+<ul>
+<li>每步迭代更新海森矩阵并求逆矩阵，计算量极大</li>
+<li>海森矩阵可能非正定，导致牛顿方向不保证是下降方向，甚至可能出现收敛至极大点。</li>
+</ul>
+<p>针对这两个问题，拟牛顿法直接利用一阶信息来构造牛顿法中海森矩阵逆矩阵的近似矩阵（后面记为$H$），避免求逆矩阵等计算量。按照构造格式的不同，常用的拟牛顿法有秩1校正法、DFP法（又称变尺度法）、BFGS法，这其中DFP和BFGS是能够保证$H$是正定的。</p>
+<p>在介绍上述算法的迭代格式之前，我们先推导待构造的$H$应满足的拟牛顿条件：</p>
+<p>对$f(x)$的二阶泰勒展开式两侧在$\mathbf {x_{k+1}}$处取梯度，得到</p>
+<script type="math/tex; mode=display">
+\nabla f(\mathbf x) = \nabla f(\mathbf {x_{k+1}}) + \nabla^2f(\mathbf {x_{k+1}})(\mathbf {x_{k}}-\mathbf {x_{k+1}})</script><p>然后代入$\mathbf x = \mathbf {x_k}$，并记</p>
+<script type="math/tex; mode=display">
+p_k = \mathbf {x_{k+1}} - \mathbf {x_k}\\
+q_k = \nabla f(\mathbf {x_{k+1}}) - \nabla f(\mathbf {x_k})</script><p>从而有</p>
+<script type="math/tex; mode=display">
+q_k=\nabla^2f(\mathbf {x_{k+1}})p_k</script><p>等价于（在海森矩阵非奇异时）</p>
+<script type="math/tex; mode=display">
+p_k=\nabla^2f(\mathbf {x_{k+1}})^{-1}q_k</script><p>因为拟牛顿法是构造$H$去逼近$\nabla^2f(\mathbf x)^{-1}$，所以$H_{k+1}$应满足</p>
+<script type="math/tex; mode=display">
+p_k=H_{k+1}q_k</script><p>上式称为拟牛顿条件，各种$H$的构造格式应满足该条件。</p>
+<h4 id="2-3-1-秩1校正法"><a href="#2-3-1-秩1校正法" class="headerlink" title="2.3.1. 秩1校正法"></a>2.3.1. 秩1校正法</h4><p>无论秩1校正法，还是DFP或BFGS，其对$H$的构造方式都是给定一个初始矩阵$H_0$，然后在第$k+1$轮迭代中对上一轮的近似矩阵$H_k$作出修正（$+\Delta H_k$）从而得到满足本轮迭代的拟牛顿条件的近似矩阵$H_{k+1}$。</p>
+<p>对于秩1校正法，第$k+1$轮迭代的校正矩阵定义为</p>
+<script type="math/tex; mode=display">
+\Delta H_k=\frac {(p_k-H_kq_k)(p_k-H_kq_k)^T}{q_k^T(p_k-H_kq_k)}</script><p>将$H_{k+1}=H_k+\Delta H_k$代入拟牛顿条件可以证明，对$\forall$给定的$H_0$，每轮迭代中用上式修正的$H_{k+1}$均满足拟牛顿条件。</p>
+<p>之所以该方法称为秩1校正，是因为该校正矩阵$\Delta H_k$是一个秩为1的矩阵（这一结论由其推导过程可以直观得出，见 [2]）。</p>
+<p>需要注意的是，秩1校正法并不保证$H_k$的正定性。仅当$q_k^T(p_k-H_kq_k)&gt;0$成立时，$H_k$保证正定性。</p>
+<h4 id="2-3-2-DFP公式"><a href="#2-3-2-DFP公式" class="headerlink" title="2.3.2. DFP公式"></a>2.3.2. DFP公式</h4><p>对于DFP算法，第$k+1$轮迭代的校正矩阵为</p>
+<script type="math/tex; mode=display">
+\Delta H_k = \frac {p_kp_k^T}{p_k^Tq_k}-\frac {H_kq_kq_k^TH_k}{q_k^TH_kq_k}</script><p>将$H_{k+1}=H_k+\Delta H_k$代入拟牛顿条件可以证明，对$\forall$给定的$H_0$，每轮迭代中用上式修正的$H_{k+1}$均满足拟牛顿条件。</p>
+<p>该方法之所以称为DFP算法，是因为该方法由Davidon提出，再由Fletcher和Powell改进。</p>
+<p>DFP算法构造的近似矩阵$H$能够保证其正定性，同时对于二次规划问题有二次终止性（即有限步收敛到最优解）。</p>
+<h4 id="2-3-3-BFGS公式"><a href="#2-3-3-BFGS公式" class="headerlink" title="2.3.3. BFGS公式"></a>2.3.3. BFGS公式</h4><p>对于BFGS算法，第$k+1$轮迭代的校正矩阵为</p>
+<script type="math/tex; mode=display">
+\Delta H_k = (1+\frac {q_k^TH_kq_k}{p_k^Tq_k})\frac {p_kp_k^T}{p_k^Tq_k}-\frac {p_kq_k^TH_k+H_kq_kp_k^T}{p_k^Tq_k}</script><p>将$H_{k+1}=H_k+\Delta H_k$代入拟牛顿条件可以证明，对$\forall$给定的$H_0$，每轮迭代中用上式修正的$H_{k+1}$均满足拟牛顿条件。</p>
+<p>该算法之所以称为BFGS算法，和DFP是一个原因，是时候祭出这张广为流传的照片了。</p>
+<p><img src="https://s2.ax1x.com/2019/09/29/u31t54.jpg" alt="BFGS"></p>
+<p>BFGS的推导也很有意思，把DFP公式中的$p_k$和$q_k$互换，然后对那个$H_{k+1}$求逆，就是BFGS公式。所以BFGS公式也称DFP公式的对偶公式，详细推导见 [2]。</p>
+<p>和DFP一样，BFGS公式也保证构造的$H$的正定性。同时，数值计算经验表明BFGS公式比DFP公式更好。</p>
+<h4 id="2-3-4-算法实现"><a href="#2-3-4-算法实现" class="headerlink" title="2.3.4. 算法实现"></a>2.3.4. 算法实现</h4><p>具体地，拟牛顿法算法流程为</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>输入：梯度$\phi(x)$，收敛阈值$\epsilon$，初始点$x_0$，初始海森矩阵逆矩阵近似$H_0$，步长$\lambda$<br>输出：局部极小点$\hat x$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 输入，并置初始梯度二范数$\begin{Vmatrix}\phi(x) \end{Vmatrix}_2=2\epsilon$<br>2. 置$H=H_0$<br>3. while($\begin{Vmatrix}\phi(x) \end{Vmatrix}_2&gt;\epsilon$):<br>4. $\ \ \ \ $计算修正矩阵$\Delta H$（秩1修正/DFP/BFGS）<br>5. $\ \ \ \ $修正$H$：$H=H+\Delta H$，使其满足拟牛顿条件<br>6. $\ \ \ \ $$x=x-H\phi(x)$<br>7. 输出$x$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>基于python实现的拟牛顿算法，求解Problem 2:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">grad</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> np.array([(<span class="number">5</span>*x[<span class="number">0</span>,<span class="number">0</span>]**<span class="number">2</span><span class="number">-1</span><span class="number">-2</span>*x[<span class="number">0</span>,<span class="number">0</span>]**<span class="number">4</span><span class="number">-2</span>*x[<span class="number">0</span>,<span class="number">0</span>]*x[<span class="number">1</span>,<span class="number">0</span>]**<span class="number">2</span>)*np.exp(-x[<span class="number">0</span>,<span class="number">0</span>]**<span class="number">2</span>-x[<span class="number">1</span>,<span class="number">0</span>]**<span class="number">2</span>),</span><br><span class="line">                     (<span class="number">2</span>*x[<span class="number">1</span>,<span class="number">0</span>]<span class="number">-2</span>*x[<span class="number">0</span>,<span class="number">0</span>]**<span class="number">3</span>*x[<span class="number">1</span>,<span class="number">0</span>]<span class="number">-2</span>*x[<span class="number">1</span>,<span class="number">0</span>]**<span class="number">3</span>+<span class="number">2</span>*x[<span class="number">0</span>,<span class="number">0</span>]*x[<span class="number">1</span>,<span class="number">0</span>])*np.exp(-x[<span class="number">0</span>,<span class="number">0</span>]**<span class="number">2</span>-x[<span class="number">1</span>,<span class="number">0</span>]**<span class="number">2</span>)]).reshape([<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">method  = <span class="string">'BFGS'</span></span><br><span class="line">epsilon = <span class="number">1e-5</span></span><br><span class="line">x       = np.array([<span class="number">-1.6</span>, <span class="number">-0.32</span>]).reshape([<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line">path    = []</span><br><span class="line">itera   = <span class="number">1</span></span><br><span class="line"><span class="string">''' 注意这里的H和上面梯度法、牛顿法中的H不一样 '''</span></span><br><span class="line">H = np.eye(<span class="number">2</span>)  <span class="comment"># inverse of Hessian Matrix, approximation</span></span><br><span class="line">x_k1 = x</span><br><span class="line">nabla_x_k1 = grad(x)</span><br><span class="line">x = x - np.matmul(H, nabla_x_k1)  <span class="comment"># 第一步迭代</span></span><br><span class="line">x_k2 = x</span><br><span class="line">nabla_x_k2 = grad(x)</span><br><span class="line"><span class="keyword">while</span>(np.linalg.norm(nabla_x_k2, ord=<span class="number">2</span>) &gt; epsilon):</span><br><span class="line">    itera += <span class="number">1</span></span><br><span class="line">    path.append(x)</span><br><span class="line">    <span class="comment"># iteration rule: xk+1 = xk - H * gradient</span></span><br><span class="line">    p = x_k2 - x_k1</span><br><span class="line">    q = nabla_x_k2 - nabla_x_k1</span><br><span class="line">    <span class="keyword">if</span> method == <span class="string">'rank1'</span>:</span><br><span class="line">        <span class="comment"># 秩1校正 H构造格式</span></span><br><span class="line">        H = H + np.matmul(p-np.matmul(H,q), (p-np.matmul(H,q)).T)/np.matmul(q.T, p-np.matmul(H,q))</span><br><span class="line">    <span class="keyword">elif</span> method == <span class="string">'DFP'</span>:</span><br><span class="line">        <span class="comment"># DFP 构造格式</span></span><br><span class="line">        H = H + np.matmul(p,p.T)/np.matmul(p.T,q) - np.matmul(np.matmul(np.matmul(H,q),q.T),H)/np.matmul(np.matmul(q.T,H),q)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># BFGS 构造格式</span></span><br><span class="line">        H = H + (<span class="number">1</span>+np.matmul(np.matmul(q.T, H),q)/np.matmul(p.T,q))*np.matmul(p,p.T)/np.matmul(p.T,q) -   (np.matmul(np.matmul(p,q.T),H)+np.matmul(np.matmul(H,q),p.T))/np.matmul(p.T,q)   </span><br><span class="line">    x = x - np.matmul(H, nabla_x_k2)</span><br><span class="line">    x_k1, nabla_x_k1 = x_k2, nabla_x_k2</span><br><span class="line">    x_k2, nabla_x_k2 = x, grad(x)</span><br><span class="line">print(<span class="string">"Quasi-Newton's Method ends after %d iterations"</span>%itera)</span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure>
+<p>输出为</p>
+<ul>
+<li>秩1校正</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Quasi-Newton<span class="string">'s Method ends after 6 iterations</span></span><br><span class="line"><span class="string">[[-1.51022398e+00]</span></span><br><span class="line"><span class="string"> [ 1.91170209e-07]]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>DFP公式</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Quasi-Newton<span class="string">'s Method ends after 5 iterations</span></span><br><span class="line"><span class="string">[[-1.51022263e+00]</span></span><br><span class="line"><span class="string"> [ 6.37277141e-07]]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>BFGS公式</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Quasi-Newton<span class="string">'s Method ends after 6 iterations</span></span><br><span class="line"><span class="string">[[-1.51022391e+00]</span></span><br><span class="line"><span class="string"> [ 1.77099359e-08]]</span></span><br></pre></td></tr></table></figure>
+<p>可以看到迭代次数并不逊色于牛顿法，但是因为避免了求逆矩阵等计算，求解速度大大加快。</p>
+<hr>
 <h3 id="2-4-共轭梯度法"><a href="#2-4-共轭梯度法" class="headerlink" title="2.4. 共轭梯度法"></a>2.4. 共轭梯度法</h3><h4 id="2-4-1-原理推导"><a href="#2-4-1-原理推导" class="headerlink" title="2.4.1. 原理推导"></a>2.4.1. 原理推导</h4><h4 id="2-4-2-算法实现"><a href="#2-4-2-算法实现" class="headerlink" title="2.4.2. 算法实现"></a>2.4.2. 算法实现</h4><h2 id="3-参考文献"><a href="#3-参考文献" class="headerlink" title="3. 参考文献"></a>3. 参考文献</h2><p>[1] <a href="https://cloud.tsinghua.edu.cn/f/f9a80c011a7a4dceae95/" target="_blank" rel="noopener">Boyd S, Vandenberghe L. Convex optimization[M]. Cambridge university press, 2004.</a></p>
 <p>[2] 陈宝林，最优化理论与算法，清华大学出版社，2005</p>
 
@@ -809,7 +878,7 @@ H' = H + \gamma I</script><p>系数$\gamma$的选择应在保证$H’$正定性�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-无约束优化的最优性条件"><span class="nav-number">1.</span> <span class="nav-text">1. 无约束优化的最优性条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-无约束优化算法"><span class="nav-number">2.</span> <span class="nav-text">2. 无约束优化算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-梯度下降法"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 梯度下降法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-原理推导"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1. 原理推导</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-算法实现"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2. 算法实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-3-变体"><span class="nav-number">2.1.3.</span> <span class="nav-text">2.1.3. 变体</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-牛顿法"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 牛顿法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-原理推导"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1. 原理推导</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-算法实现"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2. 算法实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-变体"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3. 变体</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-拟牛顿法"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. 拟牛顿法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-原理推导"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1. 原理推导</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2-算法实现"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2. 算法实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-共轭梯度法"><span class="nav-number">2.4.</span> <span class="nav-text">2.4. 共轭梯度法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-1-原理推导"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.4.1. 原理推导</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-2-算法实现"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.4.2. 算法实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-参考文献"><span class="nav-number">3.</span> <span class="nav-text">3. 参考文献</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-无约束优化的最优性条件"><span class="nav-number">1.</span> <span class="nav-text">1. 无约束优化的最优性条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-无约束优化算法"><span class="nav-number">2.</span> <span class="nav-text">2. 无约束优化算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-梯度下降法"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 梯度下降法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-原理推导"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1. 原理推导</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-算法实现"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2. 算法实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-3-变体"><span class="nav-number">2.1.3.</span> <span class="nav-text">2.1.3. 变体</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-牛顿法"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 牛顿法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-原理推导"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1. 原理推导</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-算法实现"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2. 算法实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-变体"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3. 变体</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-拟牛顿法"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. 拟牛顿法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-秩1校正法"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1. 秩1校正法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2-DFP公式"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2. DFP公式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-3-BFGS公式"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3. BFGS公式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-4-算法实现"><span class="nav-number">2.3.4.</span> <span class="nav-text">2.3.4. 算法实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-共轭梯度法"><span class="nav-number">2.4.</span> <span class="nav-text">2.4. 共轭梯度法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-1-原理推导"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.4.1. 原理推导</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-2-算法实现"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.4.2. 算法实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-参考文献"><span class="nav-number">3.</span> <span class="nav-text">3. 参考文献</span></a></li></ol></div>
             
 
           </div>
