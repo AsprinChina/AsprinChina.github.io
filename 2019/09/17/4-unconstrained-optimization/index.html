@@ -109,7 +109,7 @@
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unyndP.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unbtgA.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/29/u31t54.jpg">
-<meta property="og:updated_time" content="2019-09-29T03:16:20.964Z">
+<meta property="og:updated_time" content="2019-09-29T16:17:41.740Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="无约束优化算法">
 <meta name="twitter:description" content="无约束问题的优化，就是给定一个函数求取其最大/小值。按照优化算法是否利用了这个函数的导数（梯度、海森矩阵），相应算法可以分为利用导数的优化算法（下降法、牛顿法、……）和不利用导数的优化算法（模式搜索法、Powell法、……）。鉴于实际应用中前者效果更好，这里介绍其中最为常用的梯度下降法、牛顿法、拟牛顿法、共轭梯度法。 在运筹学中，其实无约束优化的应用场景并不多见，各种实际问题通常建模为有约束优化问">
@@ -452,6 +452,7 @@
 </tbody>
 </table>
 </div>
+<p>本章所有代码链接：<a href="https://github.com/AsprinChina/MyBlogCodes" target="_blank" rel="noopener">https://github.com/AsprinChina/MyBlogCodes</a></p>
 <h2 id="1-无约束优化的最优性条件"><a href="#1-无约束优化的最优性条件" class="headerlink" title="1. 无约束优化的最优性条件"></a>1. 无约束优化的最优性条件</h2><p>对于一个优化问题，若要找到其最优解，首先就要明确最优解有什么性质，满足什么条件，然后才能够据此去推导求解的算法。最优解满足的条件（必要、充分、充要）称为最优性条件。<a href="https://cbb1996.com/2019/07/07/1-optimizationbase/" target="_blank" rel="noopener">（戳这里回顾）</a></p>
 <p>对于求解</p>
 <script type="math/tex; mode=display">
@@ -478,7 +479,7 @@ f(\mathbf {x_{k+1}}) \ge f(\mathbf {x_k})+\nabla f(\mathbf {x_k})(\mathbf {x_{k+
 min \ \ f(\mathbf x),\ \ \mathbf x\in\mathbb R^n</script><p>我们总是希望$f(\mathbf {x_k})$的值随着迭代的进行迅速减小，所以“让迭代点$\mathbf {x_k}$沿着目标函数值下降最快的方向（即负梯度方向）前进”这个思路就显得很自然了。这正是梯度下降法的基本思想，因为负梯度方向是最速下降方向，所以梯度下降法又名最速下降方法。</p>
 <p>路线的确定光有方向还不够，还得有前进的距离（称为步长，只有在方向向量是单位向量的时候才真正是前进的距离），记为$\lambda_k$，则有梯度下降法的迭代格式为</p>
 <script type="math/tex; mode=display">
-\mathbf {x_{k+1}} = \mathbf {x_k} - \lambda_k \nabla f(\mathbf {x_k})</script><p>出于简便性的考虑，我们通常固定步长为一个常数$\lambda$。</p>
+\mathbf {x_{k+1}} = \mathbf {x_k} - \lambda_k \nabla f(\mathbf {x_k})</script><p>出于简便性的考虑，我们通常固定步长为一个常数$\lambda$（$\lambda_k=\lambda,\ \forall k$）。</p>
 <p>当然，也可以对$\lambda_k$进行一个优化选择。$\lambda_k$取最优值的过程称为一维搜索（也称精确直线搜索），即</p>
 <script type="math/tex; mode=display">
 \lambda_k = arg\ \min_{\lambda} f(\mathbf {x_k}-\lambda\nabla f(\mathbf {x_k}))</script><h4 id="2-1-2-算法实现"><a href="#2-1-2-算法实现" class="headerlink" title="2.1.2. 算法实现"></a>2.1.2. 算法实现</h4><p>综上，固定步长的梯度下降法的伪代码为</p>
@@ -683,12 +684,13 @@ p_k=H_{k+1}q_k</script><p>上式称为拟牛顿条件，各种$H$的构造格式
 <p><img src="https://s2.ax1x.com/2019/09/29/u31t54.jpg" alt="BFGS"></p>
 <p>BFGS的推导也很有意思，把DFP公式中的$p_k$和$q_k$互换，然后对那个$H_{k+1}$求逆，就是BFGS公式。所以BFGS公式也称DFP公式的对偶公式，详细推导见 [2]。</p>
 <p>和DFP一样，BFGS公式也保证构造的$H$的正定性。同时，数值计算经验表明BFGS公式比DFP公式更好。</p>
+<p>拟牛顿法行之有效，但也面临内存需求大等困难。工程上常用Limited Memory - BFGS（LBFGS）来实现BFGS算法，区别在于对中间变量的存储管理（不放到内存中，即用即算，以时间换空间），而不涉及算法原理的改变。</p>
 <h4 id="2-3-4-算法实现"><a href="#2-3-4-算法实现" class="headerlink" title="2.3.4. 算法实现"></a>2.3.4. 算法实现</h4><p>具体地，拟牛顿法算法流程为</p>
 <div class="table-container">
 <table>
 <thead>
 <tr>
-<th>输入：梯度$\phi(x)$，收敛阈值$\epsilon$，初始点$x_0$，初始海森矩阵逆矩阵近似$H_0$，步长$\lambda$<br>输出：局部极小点$\hat x$</th>
+<th>输入：梯度$\phi(x)$，收敛阈值$\epsilon$，初始点$x_0$，初始海森矩阵逆矩阵近似$H_0$<br>输出：局部极小点$\hat x$</th>
 </tr>
 </thead>
 <tbody>
@@ -715,7 +717,72 @@ p_k=H_{k+1}q_k</script><p>上式称为拟牛顿条件，各种$H$的构造格式
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Quasi-Newton<span class="string">'s Method ends after 6 iterations</span></span><br><span class="line"><span class="string">[[-1.51022391e+00]</span></span><br><span class="line"><span class="string"> [ 1.77099359e-08]]</span></span><br></pre></td></tr></table></figure>
 <p>可以看到迭代次数并不逊色于牛顿法，但是因为避免了求逆矩阵等计算，求解速度大大加快。</p>
 <hr>
-<h3 id="2-4-共轭梯度法"><a href="#2-4-共轭梯度法" class="headerlink" title="2.4. 共轭梯度法"></a>2.4. 共轭梯度法</h3><h4 id="2-4-1-原理推导"><a href="#2-4-1-原理推导" class="headerlink" title="2.4.1. 原理推导"></a>2.4.1. 原理推导</h4><h4 id="2-4-2-算法实现"><a href="#2-4-2-算法实现" class="headerlink" title="2.4.2. 算法实现"></a>2.4.2. 算法实现</h4><h2 id="3-参考文献"><a href="#3-参考文献" class="headerlink" title="3. 参考文献"></a>3. 参考文献</h2><p>[1] <a href="https://cloud.tsinghua.edu.cn/f/f9a80c011a7a4dceae95/" target="_blank" rel="noopener">Boyd S, Vandenberghe L. Convex optimization[M]. Cambridge university press, 2004.</a></p>
+<h3 id="2-4-共轭梯度法"><a href="#2-4-共轭梯度法" class="headerlink" title="2.4. 共轭梯度法"></a>2.4. 共轭梯度法</h3><p>在介绍共轭梯度法之前，首先要介绍一下什么是共轭方向。</p>
+<p>对于$n$阶对称正定矩阵$A$，若$\mathbb R^n$中的两个方向列向量$d_1$、$d_2$满足</p>
+<script type="math/tex; mode=display">
+d_1^TAd_2=0</script><p>则称$d_1$、$d_2$关于$A$<strong>共轭</strong>或正交（当$A$为单位矩阵时，正是狭义上“正交” 的定义，故共轭可理解为正交的推广）。</p>
+<p>$A$的所有共轭方向$d_1$、$d_2$、……、$d_k$（两两关于$A$共轭）是线性无关的，且有<strong>扩张子空间定理</strong>成立：</p>
+<p>对于函数$f(\mathbf x)=\frac 12 \mathbf {x^T} A \mathbf x + \mathbf {b^T} \mathbf x +c$，以$\forall \mathbf {x_0} \in \mathbb R^n$为初始点，依次沿$d_1$、$d_2$、……、$d_k$进行<strong>一维搜索</strong>，最终得到$\mathbf {x_k}$是$f(\mathbf x)$在线性流形$\begin{Bmatrix} \mathbf x|\mathbf x=\mathbf {x_0} + \sum_{i=1}^k\lambda_id_i,\ \lambda_i\in R \end{Bmatrix}$上的唯一极小点。特别地，当$k=n$时，$\mathbf {x_n}$是$\mathbb R^n$上的唯一极小点。</p>
+<h4 id="2-4-1-原理推导"><a href="#2-4-1-原理推导" class="headerlink" title="2.4.1. 原理推导"></a>2.4.1. 原理推导</h4><p>扩张子空间定理保证了，对于二次凸函数，经一组共轭方向进行一维搜索，可在有限步内找到最小点。共轭梯度法正是基于这一思想，对梯度下降法的最速下降方向进行改造，修正为一组共轭方向，从而保证二次终止性。</p>
+<p>实际上，共轭梯度法最开始提出（1952年）是用于求解线性方程组的，后来经改造用于无约束优化问题的求解。同拟牛顿法一样，共轭梯度法也是一类算法，根据修正格式的不同有FR法、PRP法等（这些字母也都是提出人的姓名首字母）。</p>
+<p>这里推导<strong>FR（Fletcher-Reeves）共轭梯度法</strong>的原理，首先基于二次凸函数$f(\mathbf x)=\frac 12 \mathbf {x^T} A \mathbf x + \mathbf {b^T} \mathbf x +c$展开，然后再推广到一般函数的无约束优化上去。</p>
+<p>对于该凸二次函数，记第$k$轮迭代从点$x_k$出发，搜索方向为$d_k$，前进步长为$\lambda_k$，到达点$x_{k+1}$。在点$x_{k+1}$处，要用$d_k$和当前负梯度方向$-\nabla f(\mathbf x_{k+1})$构造本轮迭代的前进方向$d_{k+1}$以保证$d_k$和$d_{k+1}$关于$A$共轭。</p>
+<p>共轭梯度法的修正格式为</p>
+<script type="math/tex; mode=display">
+d_{k+1}=-\nabla f(\mathbf {x_{k+1}})+\beta_k d_k</script><p>由$d_kAd_{k+1}=0$，推得（这个式子很关键，等等还要用，记为<strong>原始$\beta$表达式</strong>）</p>
+<script type="math/tex; mode=display">
+\beta_k=\frac {d_k^TA\nabla f(\mathbf {x_{k+1}})}{d_k^TAd_k}</script><p>利用凸二次函数的性质（$\nabla f(\mathbf {x_k})=A\mathbf {x_k}+\mathbf b$），我们对上式做进一步推导：</p>
+<script type="math/tex; mode=display">
+\begin {split}
+\beta_k
+&=\frac {d_k^TA\nabla f(\mathbf {x_{k+1}})}{d_k^TAd_k}\\
+&=\frac {\nabla f(\mathbf {x_{k+1}})^TA(x_{k+1}-x_k)/\lambda_k}{d_k^TA(x_{k+1}-x_k)/\lambda_k}\\
+&=\frac {\nabla f(\mathbf {x_{k+1}})^T(\nabla f(\mathbf {x_{k+1}})-\nabla f(\mathbf {x_k}))}{d_k^T(\nabla f(\mathbf {x_{k+1}})-\nabla f(\mathbf {x_k}))}
+\end {split}</script><p><strong>假如$\lambda_k$的确定采用一维搜索得到</strong>，那么有（这三步证明从略，见[2]）</p>
+<script type="math/tex; mode=display">
+\begin {split}
+& \nabla f(\mathbf {x_{k+1}})^T\nabla f(\mathbf {x_k})=0\\
+& d_k^T\nabla f(\mathbf {x_{k+1}})=0\\
+& d_k^T\nabla f(\mathbf {x_k})=-\|\nabla f(\mathbf {x_k})\|_2^2
+\end {split}</script><p>从而$\beta_k$的表达式可以进一步化简：</p>
+<script type="math/tex; mode=display">
+\begin {split}
+\beta_k
+& =\frac {\nabla f(\mathbf {x_{k+1}})^T\nabla f(\mathbf {x_{k+1}})}{-d_k^T\nabla f(\mathbf {x_k})}\\
+& =\frac {\|\nabla f (\mathbf {x_{k+1}})\|_2^2}{\|\nabla f(\mathbf {x_k})\|_2^2}
+\end {split}</script><p>上式就是FR共轭梯度法在修正前进方向（从负梯度方向到共轭方向）时的修正系数，可将其直接推广到一般函数$f(\mathbf x)$的优化上去。</p>
+<p>如果直接在<strong>原始$\beta$表达式</strong>处推广，即使用修正系数$\beta_k=\frac {d_k^T\nabla^2f(\mathbf {x_{k+1}})\nabla f(\mathbf {x_{k+1}})}{d_k^T\nabla ^2 f(\mathbf {x_{k+1}})d_k}$代入迭代格式的共轭梯度法则称为Daniel共轭梯度法。</p>
+<p>此外还有PRP（Polak、Ribiere、Polyak）共轭梯度法、SW（Sorenson、Wolfe）共轭梯度法等。</p>
+<p>有两点需要注意：</p>
+<p>第一点需要注意的是，在上述推导过程中，我们只保证了相邻两次迭代的前进方向关于$A$共轭，若要求所有迭代方向两两共轭，则<strong>初始迭代方向必须是负梯度方向</strong>。</p>
+<p>第二点需要注意的是，共轭梯度法在推广到一般函数的优化上时，就没有了有限步终止的性质。此时，搜索完所有$n$个共轭方向之后，有两种迭代继续的方案：</p>
+<ul>
+<li>继续按照共轭梯度法的迭代格式继续迭代；</li>
+<li>迭代完$n$个共轭方向之后，让前进方向回到负梯度方向，重新遍历$n$个共轭方向。</li>
+</ul>
+<p>计算经验来看，后者更好些。</p>
+<h4 id="2-4-2-算法实现"><a href="#2-4-2-算法实现" class="headerlink" title="2.4.2. 算法实现"></a>2.4.2. 算法实现</h4><p>虽然FR共轭梯度法的推导中要求了一维搜索，但是在推广到一般函数优化之后，已经没有了有限步终止性质，所以也没有必要一定要求通过一维搜索来确定步长。出于便利，这里将搜索步长固定为常数。</p>
+<p>具体地，（固定步长的）共轭梯度法的算法流程为</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>输入：梯度$\phi(x)$，收敛阈值$\epsilon$，初始点$x_0$，步长$\lambda$<br>输出：局部极小点$\hat x$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 输入，并置初始梯度二范数$\begin{Vmatrix}\phi(x) \end{Vmatrix}_2=2\epsilon$<br>2. 置$d=-\phi(x_0)$<br>3. while($\begin{Vmatrix}\phi(x) \end{Vmatrix}_2&gt;\epsilon$):<br>4. $\ \ \ \ $如果迭代次数不是变量维数$n$的整数倍：<br>5. $\ \ \ \ \ \ \ \ $计算修正系数$\beta$（FR\PRP\Daniel……）<br>6. $\ \ \ \ \ \ \ \ $修正前进方向为共轭方向$d=-\phi(x)+\beta d$<br>7. $\ \ \ \ $否则：<br>8. $\ \ \ \ \ \ \ \ $设置前进方向为负梯度方向$d=-\phi(x)$<br>9. $\ \ \ \ $$x=x+\lambda d$<br>10. 输出$x$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>基于python实现的共轭梯度法（使用FR修正系数），求解Problem 2:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">grad</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> np.array([(<span class="number">5</span>*x[<span class="number">0</span>,<span class="number">0</span>]**<span class="number">2</span><span class="number">-1</span><span class="number">-2</span>*x[<span class="number">0</span>,<span class="number">0</span>]**<span class="number">4</span><span class="number">-2</span>*x[<span class="number">0</span>,<span class="number">0</span>]*x[<span class="number">1</span>,<span class="number">0</span>]**<span class="number">2</span>)*np.exp(-x[<span class="number">0</span>,<span class="number">0</span>]**<span class="number">2</span>-x[<span class="number">1</span>,<span class="number">0</span>]**<span class="number">2</span>),</span><br><span class="line">                     (<span class="number">2</span>*x[<span class="number">1</span>,<span class="number">0</span>]<span class="number">-2</span>*x[<span class="number">0</span>,<span class="number">0</span>]**<span class="number">3</span>*x[<span class="number">1</span>,<span class="number">0</span>]<span class="number">-2</span>*x[<span class="number">1</span>,<span class="number">0</span>]**<span class="number">3</span>+<span class="number">2</span>*x[<span class="number">0</span>,<span class="number">0</span>]*x[<span class="number">1</span>,<span class="number">0</span>])*np.exp(-x[<span class="number">0</span>,<span class="number">0</span>]**<span class="number">2</span>-x[<span class="number">1</span>,<span class="number">0</span>]**<span class="number">2</span>)]).reshape([<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">epsilon = <span class="number">1e-5</span></span><br><span class="line">lambda0 = <span class="number">0.01</span></span><br><span class="line">x       = np.array([<span class="number">-1.6</span>, <span class="number">-0.32</span>]).reshape([<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line">path    = []</span><br><span class="line">itera   = <span class="number">1</span></span><br><span class="line">d       = -grad(x)  <span class="comment"># 每轮迭代的前进方向，初始为负梯度</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 先迭代一轮</span></span><br><span class="line">x_old = x</span><br><span class="line">x = x + lambda0*d</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(np.linalg.norm(grad(x), ord=<span class="number">2</span>) &gt; epsilon):</span><br><span class="line">    itera += <span class="number">1</span></span><br><span class="line">    path.append(x)</span><br><span class="line">    <span class="comment"># iteration rule: xk+1 = xk + lambda*d</span></span><br><span class="line">    beta = np.linalg.norm(grad(x))/np.linalg.norm(grad(x_old))</span><br><span class="line">    d = -grad(x) + beta*d <span class="keyword">if</span> itera%<span class="number">2</span>==<span class="number">0</span> <span class="keyword">else</span> -grad(x)</span><br><span class="line">    x_old = x</span><br><span class="line">    x = x + lambda0*d</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Conjugate Gradient Method ends after %d iterations"</span>%itera)</span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure>
+<p>输出为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Conjugate Gradient Method ends after <span class="number">1106</span> iterations</span><br><span class="line">[[<span class="number">-1.51022396e+00</span>]</span><br><span class="line"> [<span class="number">-1.66323104e-05</span>]]</span><br></pre></td></tr></table></figure>
+<p>共轭梯度法相比梯度下降法，在Problem 2上减少了$\frac 13$的迭代次数。</p>
+<h2 id="3-参考文献"><a href="#3-参考文献" class="headerlink" title="3. 参考文献"></a>3. 参考文献</h2><p>[1] <a href="https://cloud.tsinghua.edu.cn/f/f9a80c011a7a4dceae95/" target="_blank" rel="noopener">Boyd S, Vandenberghe L. Convex optimization[M]. Cambridge university press, 2004.</a></p>
 <p>[2] 陈宝林，最优化理论与算法，清华大学出版社，2005</p>
 
       
