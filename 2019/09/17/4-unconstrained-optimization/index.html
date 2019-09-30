@@ -109,7 +109,7 @@
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unyndP.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/26/unbtgA.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/29/u31t54.jpg">
-<meta property="og:updated_time" content="2019-09-29T16:17:41.740Z">
+<meta property="og:updated_time" content="2019-09-30T00:22:21.806Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="无约束优化算法">
 <meta name="twitter:description" content="无约束问题的优化，就是给定一个函数求取其最大/小值。按照优化算法是否利用了这个函数的导数（梯度、海森矩阵），相应算法可以分为利用导数的优化算法（下降法、牛顿法、……）和不利用导数的优化算法（模式搜索法、Powell法、……）。鉴于实际应用中前者效果更好，这里介绍其中最为常用的梯度下降法、牛顿法、拟牛顿法、共轭梯度法。 在运筹学中，其实无约束优化的应用场景并不多见，各种实际问题通常建模为有约束优化问">
@@ -761,7 +761,7 @@ d_{k+1}=-\nabla f(\mathbf {x_{k+1}})+\beta_k d_k</script><p>由$d_kAd_{k+1}=0$�
 <li>迭代完$n$个共轭方向之后，让前进方向回到负梯度方向，重新遍历$n$个共轭方向。</li>
 </ul>
 <p>计算经验来看，后者更好些。</p>
-<h4 id="2-4-2-算法实现"><a href="#2-4-2-算法实现" class="headerlink" title="2.4.2. 算法实现"></a>2.4.2. 算法实现</h4><p>虽然FR共轭梯度法的推导中要求了一维搜索，但是在推广到一般函数优化之后，已经没有了有限步终止性质，所以也没有必要一定要求通过一维搜索来确定步长。出于便利，这里将搜索步长固定为常数。</p>
+<h4 id="2-4-2-算法实现"><a href="#2-4-2-算法实现" class="headerlink" title="2.4.2. 算法实现"></a>2.4.2. 算法实现</h4><p>虽然FR共轭梯度法的推导中要求了一维搜索，但是在推广到一般函数优化之后，已经没有了有限步终止性质，所以也没有必要一定要求通过一维搜索来确定步长。出于便利，这里将搜索步长固定为常数。要注意的是，当不再采用一维搜索时，共轭梯度法给出的前进方向不再保证是下降方向。</p>
 <p>具体地，（固定步长的）共轭梯度法的算法流程为</p>
 <div class="table-container">
 <table>
